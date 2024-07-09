@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: finalcase-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/v1/user/**
+        - id: real-estate-listing-service
+          uri: lb://REAL-ESTATE-LISTING-SERVICE
+          predicates:
+            - Path=/api/v1/listing/**
+        - id: payment-service
+          uri: lb://PAYMENT-SERVICE
+          predicates:
+            - Path=/api/v1/payment/**
+        - id: subscription-service
+          uri: lb://SUBSCRIPTION-SERVICE
+          predicates:
+            - Path=/api/v1/subscriptions/**
+server:
+  port: 8080
+
+eureka:
+  client:
+    register-with-eureka: true
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+  instance:
+    prefer-ip-address: true

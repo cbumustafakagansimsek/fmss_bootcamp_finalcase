@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="teal-estate-listing-activate-service" />
+        <module name="registry" />
+        <module name="payment-service" />
+        <module name="subscription-service" />
+        <module name="real-estate-listing-activation-service" />
+        <module name="product-service" />
+        <module name="user-service" />
+        <module name="ad-service" />
+        <module name="listing-service" />
+        <module name="gateway" />
+        <module name="real-estate-listing-service" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ad-service" target="19" />
+      <module name="gateway" target="19" />
+      <module name="listing-service" target="19" />
+      <module name="payment-service" target="19" />
+      <module name="product-service" target="19" />
+      <module name="real-estate-listing-activate-service" target="19" />
+      <module name="real-estate-listing-activation-service" target="19" />
+      <module name="real-estate-listing-service" target="19" />
+      <module name="registry" target="19" />
+      <module name="registry-service" target="19" />
+      <module name="subscription-service" target="19" />
+      <module name="teal-estate-listing-activate-service" target="19" />
+      <module name="user-service" target="19" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ad-service" options="-parameters" />
+      <module name="gateway" options="-parameters" />
+      <module name="listing-service" options="-parameters" />
+      <module name="payment-service" options="-parameters" />
+      <module name="product-service" options="-parameters" />
+      <module name="real-estate-listing-activate-service" options="-parameters" />
+      <module name="real-estate-listing-activation-service" options="-parameters" />
+      <module name="real-estate-listing-service" options="-parameters" />
+      <module name="registry" options="-parameters" />
+      <module name="registry-service" options="-parameters" />
+      <module name="subscription-service" options="-parameters" />
+      <module name="teal-estate-listing-activate-service" options="-parameters" />
+      <module name="user-service" options="-parameters" />
+    </option>
+  </component>
+</project>
