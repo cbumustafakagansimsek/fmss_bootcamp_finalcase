@@ -14,7 +14,6 @@
         <module name="product-service" />
         <module name="user-service" />
         <module name="ad-service" />
-        <module name="listing-service" />
         <module name="gateway" />
         <module name="real-estate-listing-service" />
       </profile>

@@ -5,7 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/ad-service/ad-service.iml" filepath="$PROJECT_DIR$/ad-service/ad-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/fmss-final-case.iml" filepath="$PROJECT_DIR$/.idea/fmss-final-case.iml" />
       <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
-      <module fileurl="file://$PROJECT_DIR$/listing-service/listing-service.iml" filepath="$PROJECT_DIR$/listing-service/listing-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/payment-service/payment-service.iml" filepath="$PROJECT_DIR$/payment-service/payment-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/product-service/product-service.iml" filepath="$PROJECT_DIR$/product-service/product-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/real-estate-listing-activation-service/real-estate-listing-activation-service.iml" filepath="$PROJECT_DIR$/real-estate-listing-activation-service/real-estate-listing-activation-service.iml" />

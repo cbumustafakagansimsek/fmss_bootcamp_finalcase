@@ -1,14 +1,11 @@
 package com.example.realestatelistingservice.factory.impl;
 
 import com.example.realestatelistingservice.dto.request.DetachedHouseRequest;
-import com.example.realestatelistingservice.dto.request.FlatRequest;
 import com.example.realestatelistingservice.factory.RealEstateListingFactory;
 import com.example.realestatelistingservice.model.HouseType;
 import com.example.realestatelistingservice.model.ListingStatus;
 import com.example.realestatelistingservice.model.RealEstateListing;
-import com.example.realestatelistingservice.repository.RealEstateListingRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDate;
 
@@ -25,6 +22,7 @@ public class DetachedHouseFactory implements RealEstateListingFactory<DetachedHo
                 .numberOfRooms(request.getNumberOfRooms())
                 .numberOfLivingRooms(request.getNumberOfLivingRooms())
                 .amount(request.getAmount())
+                .numberOfFloors(request.getNumberOfFloors())
                 .size(request.getSize())
                 .userId(request.getUserId())
                 .postedDate(LocalDate.now())

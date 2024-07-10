@@ -15,9 +15,8 @@ public class SubscriptionConsumer {
     private final SubscriptionService subscriptionService;
     @RabbitListener(queues = "${subscription.queue}")
     public void sendNotification(Long userId) {
-        subscriptionService.save(userId);
+            subscriptionService.save(userId);
             log.info("subscription :{}", userId);
-
     }
 
 

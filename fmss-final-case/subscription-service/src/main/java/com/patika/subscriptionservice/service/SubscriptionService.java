@@ -8,6 +8,7 @@ import com.patika.subscriptionservice.exception.SubscriptionNotFoundException;
 import com.patika.subscriptionservice.model.Subscription;
 import com.patika.subscriptionservice.repository.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class SubscriptionService {
 
@@ -27,7 +29,8 @@ public class SubscriptionService {
     private final UserService userService;
 
     public void save(Long id){
-        UserResponse userResponse = userService.findById(id);
+        log.info("Request to save subscription by id:{}",id);
+        //UserResponse userResponse = userService.findById(id);
         LocalDate now = LocalDate.now();
 
         Optional<Subscription> lastProduct = subscriptionRepository.findTopByUserIdOrderByEndDateDesc(id);
@@ -38,16 +41,17 @@ public class SubscriptionService {
                                         id));
 
         }else {
-            //If there is a subscription
+            //If there is no subscription
             subscriptionRepository.save(new Subscription(now,now.plusMonths(1),id));
 
-            //change user role as a subscripted
+            //Change user role as a subscripted
             userService.updateRoleAsSubscribed(id);
         }
 
     }
 
     public SubscriptionResponse findCurrentSubscription(Long userId){
+        log.info("Request to find current subscription by id:{}",userId);
         Subscription subscription = subscriptionRepository.findAllByUserId(userId).stream()
                 .collect(Collectors.minBy(Comparator.comparing(Subscription::getEndDate)))
                 .orElseThrow(()-> new SubscriptionNotFoundException("Subcription not found by userId"+userId));
@@ -57,17 +61,19 @@ public class SubscriptionService {
     }
 
     @Scheduled(cron = "0 0 0 * * ?")
-    private void cancelExpiredProduct() {
-        LocalDate now = LocalDate.now();
-
+    private void cancelExpiredSubscription() {
+        log.info("Cancellation of scheduled Expired subscriptions");
+        //List of users' latest subscription packages
         List<Subscription> subscriptions = subscriptionRepository.findAll().stream()
                 .collect(Collectors.groupingBy(Subscription::getUserId,Collectors.maxBy(Comparator.comparing(Subscription::getEndDate))))
                 .values()
                 .stream()
                 .map(Optional::get)
                 .toList();
+
         for (Subscription subscription : subscriptions) {
-            if (subscription.getEndDate().isBefore(now)) {
+            if (subscription.getEndDate().isBefore(LocalDate.now())) {
+                log.info("Cancellation subscriotion for id:{}",subscription.getUserId());
                 userService.updateRoleAsInitial(subscription.getUserId());
             }
         }

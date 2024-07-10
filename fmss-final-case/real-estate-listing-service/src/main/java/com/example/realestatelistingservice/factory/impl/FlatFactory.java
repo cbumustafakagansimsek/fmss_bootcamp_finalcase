@@ -20,6 +20,7 @@ public class FlatFactory implements RealEstateListingFactory<FlatRequest> {
                 .numberOfRooms(request.getNumberOfRooms())
                 .numberOfLivingRooms(request.getNumberOfLivingRooms())
                 .size(request.getSize())
+                .numberOfFloors(request.getNumberOfFloors())
                 .postedDate(LocalDate.now())
                 .status(ListingStatus.IN_REVIEW)
                 .houseType(HouseType.FLAT)

@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "user-service",path = "/api/v1/user")
+@FeignClient(name = "real-estate-listing-service",path = "/api/v1/listing")
 public interface RealEstateListingClient {
 
     @PutMapping

@@ -1,9 +1,12 @@
-package com.patika.subscriptionservice.exception;
+package com.example.realestatelistingservice.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.tomcat.util.json.JSONParser;
+import org.springframework.boot.json.JsonParser;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -44,8 +47,30 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(message,HttpStatusCode.valueOf(message.getStatus()));
     }
 
-    @ExceptionHandler(SubscriptionNotFoundException.class)
-    public ResponseEntity<ExceptionMessage> subscriptionNotFoundException(SubscriptionNotFoundException exception) throws IOException {
+    @ExceptionHandler(ExhaustedListingLimitException.class)
+    public ResponseEntity<ExceptionMessage> exhaustedListingLimitException(ExhaustedListingLimitException exception) throws IOException {
+        log.error(exception.getMessage());
+        return new ResponseEntity<>(ExceptionMessage.builder()
+                .error(HttpStatus.BAD_REQUEST.name())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(exception.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build(),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(HouseTypeIsInvalidException.class)
+    public ResponseEntity<ExceptionMessage> houseTypeIsInvalidException(HouseTypeIsInvalidException exception) throws IOException {
+        log.error(exception.getMessage());
+        return new ResponseEntity<>(ExceptionMessage.builder()
+                .error(HttpStatus.BAD_REQUEST.name())
+                .status(HttpStatus.BAD_REQUEST.value())
+                .message(exception.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build(),HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(RealEstateListingNotFoundException.class)
+    public ResponseEntity<ExceptionMessage> realEstateListingNotFoundException(RealEstateListingNotFoundException exception) throws IOException {
         log.error(exception.getMessage());
         return new ResponseEntity<>(ExceptionMessage.builder()
                 .error(HttpStatus.BAD_REQUEST.name())

@@ -12,6 +12,7 @@ public class PaymentService {
 
     private final SubscriptionProducer subscriptionProducer;
     public boolean paymentValidation(Long userId){
+        log.info("request for payment validate by userId:{}",userId);
         subscriptionProducer.sendSubscription(userId);
         return true;
     }

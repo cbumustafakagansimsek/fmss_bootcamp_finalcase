@@ -49,6 +49,9 @@ public class RealEstateListing {
 
     @Column(name = "posted_date",nullable = false)
     private LocalDate postedDate;
+
+    @Column(name = "number_of_floors",nullable = false)
+    private Integer numberOfFloors;
     @Column(name = "floor_number")
     private Integer floorNumber;
 

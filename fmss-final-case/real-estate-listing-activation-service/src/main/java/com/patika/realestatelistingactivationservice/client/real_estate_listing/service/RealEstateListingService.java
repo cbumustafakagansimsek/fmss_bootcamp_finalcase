@@ -13,6 +13,7 @@ public class RealEstateListingService {
     private final RealEstateListingClient realEstateListingClient;
 
     public void updateStatus(ListingStatus status,Long id){
+        log.info("request to update status for status:{} by id:{}",status,id);
         realEstateListingClient.updateStatus(status, id);
     }
 }

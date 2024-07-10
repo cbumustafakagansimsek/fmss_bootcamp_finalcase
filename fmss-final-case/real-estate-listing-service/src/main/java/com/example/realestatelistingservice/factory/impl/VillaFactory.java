@@ -22,6 +22,7 @@ public class VillaFactory implements RealEstateListingFactory<VillaRequest> {
                 .size(request.getSize())
                 .amount(request.getAmount())
                 .userId(request.getUserId())
+                .numberOfFloors(request.getNumberOfFloors())
                 .postedDate(LocalDate.now())
                 .status(ListingStatus.IN_REVIEW)
                 .houseType(HouseType.VILLA)
