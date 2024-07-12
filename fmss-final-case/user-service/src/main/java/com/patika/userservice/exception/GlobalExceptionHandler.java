@@ -55,4 +55,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .build(),HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(TokenIsNotValidException.class)
+    public ResponseEntity<ExceptionMessage> tokenIsNotValidException(TokenIsNotValidException exception) throws IOException {
+        log.error(exception.getMessage());
+        return new ResponseEntity<>(ExceptionMessage.builder()
+                .error(HttpStatus.UNAUTHORIZED.name())
+                .status(HttpStatus.UNAUTHORIZED.value())
+                .message(exception.getMessage())
+                .timestamp(LocalDateTime.now())
+                .build(),HttpStatus.UNAUTHORIZED);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.patika.userservice.controller;
 
+import com.patika.userservice.dto.request.LoginRequest;
 import com.patika.userservice.dto.request.UserRequest;
 import com.patika.userservice.dto.response.UserResponse;
 import com.patika.userservice.service.UserService;
@@ -17,11 +18,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
-    @PostMapping
-    public void save(@Valid @RequestBody UserRequest request){
-        log.info("Rest request to save user {}",request);
-        userService.save(request);
-    }
+
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> findById(@PathVariable Long id){

@@ -31,27 +31,31 @@ public class RealEstateListingController {
 
     private final RealEstateListingService realEstateListingService;
 
-    @PostMapping("/flat")
-    public ResponseEntity<Void> saveFlat(@Valid @RequestBody FlatRequest request){
+    @PostMapping("/secure/flat")
+    public ResponseEntity<Void> saveFlat(@RequestHeader("x-auth-user-id") Long userId,
+                                         @Valid @RequestBody FlatRequest request){
         log.debug("REST Request to save real estate listing as flat: {}", request);
-        realEstateListingService.save(request);
+        realEstateListingService.save(request,userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/villa")
-    public ResponseEntity<Void> saveVilla(@Valid @RequestBody VillaRequest request){
-        realEstateListingService.save(request);
+    @PostMapping("/secure/villa")
+    public ResponseEntity<Void> saveVilla(@RequestHeader("x-auth-user-id") Long userId,
+                                          @Valid @RequestBody VillaRequest request){
+        realEstateListingService.save(request,userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping("/detached-house")
-    public ResponseEntity<Void> saveDetachedHouse(@Valid @RequestBody DetachedHouseRequest request){
-        realEstateListingService.save(request);
+    @PostMapping("/secure/detached-house")
+    public ResponseEntity<Void> saveDetachedHouse(@RequestHeader("x-auth-user-id") Long userId,
+                                                  @Valid @RequestBody DetachedHouseRequest request){
+        realEstateListingService.save(request,userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateStatus(@RequestParam ListingStatus status, @RequestParam Long id){
+    public ResponseEntity<Void> updateStatus(@RequestParam ListingStatus status,
+                                             @RequestParam Long id){
         realEstateListingService.updateStatus(status,id);
         return new ResponseEntity<>(HttpStatus.OK);
     }

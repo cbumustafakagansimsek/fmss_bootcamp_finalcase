@@ -1,34 +1,35 @@
-package com.patika.userservice.config;
+package com.patika.userservice.auth;
 
-import com.javatechie.entity.UserCredential;
+import com.patika.userservice.model.User;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 
+@Data
+@AllArgsConstructor
 public class CustomUserDetails implements UserDetails {
 
-    private String username;
-    private String password;
-
-    public CustomUserDetails(UserCredential userCredential) {
-        this.username = userCredential.getName();
-        this.password = userCredential.getPassword();
-    }
+    private User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRole().toString()));
+
     }
 
     @Override
     public String getPassword() {
-        return password;
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return user.getMail();
     }
 
     @Override

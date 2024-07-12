@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 public class FlatFactory implements RealEstateListingFactory<FlatRequest> {
     @Override
-    public RealEstateListing createListing(FlatRequest request) {
+    public RealEstateListing createListing(FlatRequest request,Long userId) {
         return RealEstateListing.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -24,7 +24,7 @@ public class FlatFactory implements RealEstateListingFactory<FlatRequest> {
                 .postedDate(LocalDate.now())
                 .status(ListingStatus.IN_REVIEW)
                 .houseType(HouseType.FLAT)
-                .userId(request.getUserId())
+                .userId(userId)
                 .floorNumber(request.getFloorNumber())
                 .build();
     }

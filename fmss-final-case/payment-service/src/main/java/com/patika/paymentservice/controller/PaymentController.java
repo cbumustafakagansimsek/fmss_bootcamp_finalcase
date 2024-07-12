@@ -4,10 +4,9 @@ import com.patika.paymentservice.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("api/v1/payment")
@@ -17,8 +16,8 @@ public class PaymentController {
 
     private final PaymentService paymentService;
 
-    @PostMapping("/validate/{userId}")
-    public ResponseEntity<Boolean> paymentValidate(@PathVariable Long userId){
+    @PostMapping("/validate")
+    public ResponseEntity<Boolean> paymentValidate(@RequestHeader("x-auth-user-id") Long userId){
         log.info("Rest request for payment validate by userId:{}",userId);
         return ResponseEntity.ok(paymentService.paymentValidation(userId));
     }

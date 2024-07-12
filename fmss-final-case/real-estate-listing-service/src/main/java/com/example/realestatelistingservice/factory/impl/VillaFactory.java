@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class VillaFactory implements RealEstateListingFactory<VillaRequest> {
 
     @Override
-    public RealEstateListing createListing(VillaRequest request) {
+    public RealEstateListing createListing(VillaRequest request,Long userId) {
         return RealEstateListing.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -21,7 +21,7 @@ public class VillaFactory implements RealEstateListingFactory<VillaRequest> {
                 .numberOfLivingRooms(request.getNumberOfLivingRooms())
                 .size(request.getSize())
                 .amount(request.getAmount())
-                .userId(request.getUserId())
+                .userId(userId)
                 .numberOfFloors(request.getNumberOfFloors())
                 .postedDate(LocalDate.now())
                 .status(ListingStatus.IN_REVIEW)

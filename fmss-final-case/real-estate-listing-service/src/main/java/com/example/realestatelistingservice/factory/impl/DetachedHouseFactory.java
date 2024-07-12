@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class DetachedHouseFactory implements RealEstateListingFactory<DetachedHouseRequest> {
 
     @Override
-    public RealEstateListing createListing(DetachedHouseRequest request ) {
+    public RealEstateListing createListing(DetachedHouseRequest request ,Long userId) {
         return RealEstateListing.builder()
                 .title(request.getTitle())
                 .description(request.getDescription())
@@ -24,7 +24,7 @@ public class DetachedHouseFactory implements RealEstateListingFactory<DetachedHo
                 .amount(request.getAmount())
                 .numberOfFloors(request.getNumberOfFloors())
                 .size(request.getSize())
-                .userId(request.getUserId())
+                .userId(userId)
                 .postedDate(LocalDate.now())
                 .yardSize(request.getYardSize())
                 .status(ListingStatus.IN_REVIEW)

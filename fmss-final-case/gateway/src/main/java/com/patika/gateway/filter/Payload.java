@@ -1,22 +1,23 @@
-package com.patika.userservice.dto.response;
+package com.patika.gateway.filter;
 
-import com.patika.userservice.model.Role;
 import lombok.*;
 
-@Builder
+import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserResponse {
-
+@ToString
+public class Payload {
     private Long id;
 
     private String name;
 
-    private Role role;
+    private AuthRole role;
     private String surname;
 
     private String mail;
+
 
 }

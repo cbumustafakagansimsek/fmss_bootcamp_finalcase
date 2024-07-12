@@ -23,6 +23,7 @@ public class UserConverter {
         return UserResponse.builder()
                 .id(user.getId())
                 .mail(user.getMail())
+                .role(user.getRole())
                 .name(user.getName())
                 .surname(user.getSurname())
                 .build();

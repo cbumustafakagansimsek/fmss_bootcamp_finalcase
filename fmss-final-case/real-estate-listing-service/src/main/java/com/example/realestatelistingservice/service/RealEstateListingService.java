@@ -37,25 +37,27 @@ public class RealEstateListingService {
     private final ListingActivationProducer listingActivationProducer;
     private final SubscriptionService subscriptionService;
 
-    public <T> void save(T c ){
+    public <T> void save(T c ,Long userId){
         log.info("Request to save real estate listing");
         RealEstateListing listing;
         if (c.getClass() == FlatRequest.class ){
-            listing = new FlatFactory().createListing((FlatRequest) c);
+            listing = new FlatFactory().createListing((FlatRequest) c,userId);
         } else if (c.getClass() == VillaRequest.class) {
-            listing = new VillaFactory().createListing((VillaRequest) c);
+            listing = new VillaFactory().createListing((VillaRequest) c,userId);
         }else if (c.getClass() == DetachedHouseRequest.class) {
-            listing = new DetachedHouseFactory().createListing((DetachedHouseRequest) c);
+            listing = new DetachedHouseFactory().createListing((DetachedHouseRequest) c,userId);
         }else {
             throw new HouseTypeIsInvalidException("Request class is invalid ");
         }
 
+        //If 10 usage rights have expired
         if (realEstateListingRepository.countByUserId(listing.getUserId())>=subscriptionService.findCurrentSubscription(listing.getUserId()).getListingLimit()){
         throw new ExhaustedListingLimitException("Listing posting limit has been exhausted.");
         }
 
         RealEstateListing realEstateListing = realEstateListingRepository.save(listing);
 
+        //Directs the listing to the activation service
         listingActivationProducer.sendListingActivation(realEstateListing.getId());
     }
 

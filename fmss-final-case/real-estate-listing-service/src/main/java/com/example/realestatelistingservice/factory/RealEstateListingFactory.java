@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RealEstateListingFactory<T> {
 
-    RealEstateListing createListing(T object);
+    RealEstateListing createListing(T object,Long userId);
 }
