@@ -25,9 +25,6 @@ public class RealEstateListingRequest {
     @Min(value = 0, message = "Size should not be less than 0")
     private Integer size;
 
-    @NotNull(message = "UserId is mandatory")
-    private Long userId;
-
     @NotNull(message = "Amount is mandatory")
     @Min(value = 0, message = "Amount should not be less than 0")
     private BigDecimal amount;

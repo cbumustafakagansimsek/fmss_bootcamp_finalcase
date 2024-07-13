@@ -65,10 +65,4 @@ public class UserService {
 
         return converter.toResponse(userRepository.save(user));
     }
-
-    protected boolean isExistUser(String mail){
-        log.info("Request to change user role as Initial by Id: {}",mail);
-
-        return userRepository.existsUserByMail(mail);
-    }
 }

@@ -27,7 +27,7 @@ public class AuthController {
         return new ResponseEntity<>(authService.login(request), HttpStatus.ACCEPTED);
     }
     @PostMapping("/register")
-    public ResponseEntity<String> register (@Valid @RequestBody UserRequest request){
+    public ResponseEntity<Boolean> register (@Valid @RequestBody UserRequest request){
         log.info("Rest request to save user {}",request);
         return new ResponseEntity<>(authService.register(request), HttpStatus.CREATED);
     }

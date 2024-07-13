@@ -43,12 +43,11 @@ public class AuthService {
         return jwtToken;
     }
 
-    public String register(UserRequest request){
+    public boolean register(UserRequest request){
         log.debug("Request to register for User: {}",request);
 
         userService.save(request);
-
-        return "account";
+        return true;
     }
 
     public UserResponse validateToken(String token) {
