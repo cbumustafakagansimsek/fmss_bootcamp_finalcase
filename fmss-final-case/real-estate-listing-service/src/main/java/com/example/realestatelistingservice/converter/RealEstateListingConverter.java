@@ -23,6 +23,7 @@ public class RealEstateListingConverter {
                 .title(listing.getTitle())
                 .description(listing.getDescription())
                 .houseType(listing.getHouseType())
+                .amount(listing.getAmount())
                 .province(listing.getProvince())
                 .district(listing.getDistrict())
                 .size(listing.getSize())

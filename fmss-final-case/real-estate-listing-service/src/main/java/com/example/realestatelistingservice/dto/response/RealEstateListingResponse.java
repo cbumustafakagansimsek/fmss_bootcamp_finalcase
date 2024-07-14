@@ -5,6 +5,7 @@ import com.example.realestatelistingservice.model.ListingStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Getter
@@ -20,6 +21,7 @@ public class RealEstateListingResponse {
     private String title;
     private String description;
 
+    private BigDecimal amount;
 
     private HouseType houseType;
 

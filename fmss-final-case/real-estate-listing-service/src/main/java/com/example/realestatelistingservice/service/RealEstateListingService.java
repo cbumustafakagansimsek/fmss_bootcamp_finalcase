@@ -4,6 +4,7 @@ import com.example.realestatelistingservice.client.subscription.service.Subscrip
 import com.example.realestatelistingservice.converter.RealEstateListingConverter;
 import com.example.realestatelistingservice.dto.request.*;
 import com.example.realestatelistingservice.dto.response.RealEstateListingResponse;
+import com.example.realestatelistingservice.dto.response.SearchResponse;
 import com.example.realestatelistingservice.exception.ExhaustedListingLimitException;
 import com.example.realestatelistingservice.exception.HouseTypeIsInvalidException;
 import com.example.realestatelistingservice.exception.RealEstateListingNotFoundException;
@@ -61,7 +62,7 @@ public class RealEstateListingService {
         listingActivationProducer.sendListingActivation(realEstateListing.getId());
     }
 
-    public List<RealEstateListingResponse> searchAll(RealEstateListingSearchRequest request){
+    public SearchResponse searchAll(RealEstateListingSearchRequest request){
 
         log.info("Request to search all real estate listing");
 
@@ -69,9 +70,12 @@ public class RealEstateListingService {
 
         PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize(), Sort.by(request.getSort(), "amount"));
 
-        Page<RealEstateListing> listings = realEstateListingRepository.findAll(productSpecification, pageRequest);
 
-        return realEstateListingConverter.toResponse(listings.stream().toList());
+        Page<RealEstateListing> listings = realEstateListingRepository.findAll(productSpecification, pageRequest);
+        return SearchResponse.builder()
+                .response(realEstateListingConverter.toResponse(listings.stream().toList()))
+                .totalPageNumber(listings.getTotalPages())
+                .build();
 
     }
 
@@ -84,6 +88,12 @@ public class RealEstateListingService {
         realEstateListing.setStatus(status);
 
         realEstateListingRepository.save(realEstateListing);
+    }
+
+    public RealEstateListingResponse findById(Long id){
+        log.info("Request to find by id {}",id);
+        RealEstateListing listing =realEstateListingRepository.findById(id).orElseThrow(()->new RealEstateListingNotFoundException("Real estate listing not found by id:"+id));
+        return realEstateListingConverter.toResponse(listing) ;
     }
 
     

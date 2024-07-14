@@ -15,7 +15,6 @@ public class RealEstateListingSpesification {
     public static Specification<RealEstateListing> initRealEstateListingSpecification(RealEstateListingSearchRequest request) {
         return (root, query, criteriaBuilder) -> {
 
-            //Join<Product, Publisher> publisherJoin = root.join("publisher");
 
             List<Predicate> predicateList = new ArrayList<>();
 
@@ -27,9 +26,6 @@ public class RealEstateListingSpesification {
                 predicateList.add(criteriaBuilder.like(root.get("district"),"%" + request.getDistrict()+"%"));
             }
 
-//            if (request.getMinSize() != null) {
-//                predicateList.add(criteriaBuilder.greaterThan(root.get("size"), request.getSize()));
-//            }
             if (request.getMaxSize() != null && request.getMinSize() != null) {
                 predicateList.add(criteriaBuilder.between(root.get("size"), request.getMinSize(), request.getMaxSize()));
             }

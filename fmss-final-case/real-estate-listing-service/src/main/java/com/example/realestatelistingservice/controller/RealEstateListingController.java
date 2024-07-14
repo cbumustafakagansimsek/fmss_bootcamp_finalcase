@@ -6,6 +6,7 @@ import com.example.realestatelistingservice.dto.request.FlatRequest;
 import com.example.realestatelistingservice.dto.request.RealEstateListingSearchRequest;
 import com.example.realestatelistingservice.dto.request.VillaRequest;
 import com.example.realestatelistingservice.dto.response.RealEstateListingResponse;
+import com.example.realestatelistingservice.dto.response.SearchResponse;
 import com.example.realestatelistingservice.model.ListingStatus;
 import com.example.realestatelistingservice.model.RealEstateListing;
 import com.example.realestatelistingservice.repository.spesification.RealEstateListingSpesification;
@@ -34,7 +35,7 @@ public class RealEstateListingController {
     @PostMapping("/secure/flat")
     public ResponseEntity<Void> saveFlat(@RequestHeader("x-auth-user-id") Long userId,
                                          @Valid @RequestBody FlatRequest request){
-        log.debug("REST Request to save real estate listing as flat: {}", request);
+        log.info("REST Request to save real estate listing as flat: {}", request);
         realEstateListingService.save(request,userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -42,6 +43,8 @@ public class RealEstateListingController {
     @PostMapping("/secure/villa")
     public ResponseEntity<Void> saveVilla(@RequestHeader("x-auth-user-id") Long userId,
                                           @Valid @RequestBody VillaRequest request){
+        log.info("REST Request to save real estate listing as villa: {}", request);
+
         realEstateListingService.save(request,userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -49,6 +52,9 @@ public class RealEstateListingController {
     @PostMapping("/secure/detached-house")
     public ResponseEntity<Void> saveDetachedHouse(@RequestHeader("x-auth-user-id") Long userId,
                                                   @Valid @RequestBody DetachedHouseRequest request){
+
+        log.info("REST Request to save real estate listing as detachen house: {}", request);
+
         realEstateListingService.save(request,userId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -56,13 +62,23 @@ public class RealEstateListingController {
     @PutMapping
     public ResponseEntity<Void> updateStatus(@RequestParam ListingStatus status,
                                              @RequestParam Long id){
+        log.info("REST Request to update status as {} by id:{}",status,id);
+
         realEstateListingService.updateStatus(status,id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping()
-    public ResponseEntity<List<RealEstateListingResponse>> searchAll(@RequestBody RealEstateListingSearchRequest request){
+    public ResponseEntity<SearchResponse> searchAll(RealEstateListingSearchRequest request){
+        log.info("REST Request to search all real estate listing");
 
         return new ResponseEntity<>(realEstateListingService.searchAll(request),HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RealEstateListingResponse> findById(@PathVariable Long id){
+        log.info("REST Request to find by id {}",id);
+
+        return new ResponseEntity<>(realEstateListingService.findById(id),HttpStatus.OK);
     }
 }

@@ -10,12 +10,16 @@ spring:
           uri: lb://USER-SERVICE
           predicates:
             - Path=/api/v1/user/**,/api/v1/auth/**
+        - id: real-estate-listing-service-secured
+          uri: lb://REAL-ESTATE-LISTING-SERVICE
+          predicates:
+            - Path=/api/v1/listing/secure/**
+          filters:
+            - AuthFilter
         - id: real-estate-listing-service
           uri: lb://REAL-ESTATE-LISTING-SERVICE
           predicates:
             - Path=/api/v1/listing/**
-          filters:
-            - AuthFilter
         - id: payment-service
           uri: lb://PAYMENT-SERVICE
           predicates:
