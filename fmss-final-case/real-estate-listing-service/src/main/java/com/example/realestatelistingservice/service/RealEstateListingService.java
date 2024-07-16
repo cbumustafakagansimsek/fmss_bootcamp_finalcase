@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -94,6 +95,15 @@ public class RealEstateListingService {
         log.info("Request to find by id {}",id);
         RealEstateListing listing =realEstateListingRepository.findById(id).orElseThrow(()->new RealEstateListingNotFoundException("Real estate listing not found by id:"+id));
         return realEstateListingConverter.toResponse(listing) ;
+    }
+
+    public List<RealEstateListingResponse> findAllByUserId(Long userId, Optional<ListingStatus> status){
+        log.info("Request to find all by id {} with status: {}",userId,status);
+        if (status.isPresent()){
+            return realEstateListingConverter.toResponse(realEstateListingRepository.findAllByUserIdAndStatus(userId,status.get())) ;
+        }
+
+        return realEstateListingConverter.toResponse(realEstateListingRepository.findAllByUserId(userId)) ;
     }
 
     

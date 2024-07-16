@@ -33,14 +33,14 @@ public class AuthService {
     private final JwtProvider jwtTokenProvider;
 
 
-    public String login(LoginRequest request){
+    public UserSecurityInfo login(LoginRequest request){
         log.debug("Request to login : {}",request);
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getMail(), request.getPassword());
         Authentication auth = authenticationManager.authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(auth);
         String jwtToken = jwtTokenProvider.generateJwtToken(auth);
-        return jwtToken;
+        return UserSecurityInfo.builder().token(jwtToken).build();
     }
 
     public boolean register(UserRequest request){

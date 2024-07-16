@@ -11,10 +11,5 @@ import org.springframework.beans.factory.annotation.Value;
 @Getter
 @Builder
 public class UserSecurityInfo {
-    private String email;
-    private String name;
-    private Long id;
-    @Value("${finalcase.expires.in}")
-    private Long expiresIn ;
     private String token;
 }

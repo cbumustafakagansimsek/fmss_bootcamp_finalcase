@@ -4,10 +4,12 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Component
@@ -21,6 +23,7 @@ public class JwtProvider {
 
     public String generateJwtToken(Authentication auth){
         CustomUserDetails userDetails = (CustomUserDetails) auth.getPrincipal();
+        System.out.println(System.currentTimeMillis()+"-"+ new Date().getTime());
         Date expireDate = new Date(new Date().getTime()+EXPIRES_IN);
         return Jwts.builder()
                 .setSubject(Long.toString(userDetails.getUser().getId()))

@@ -1,5 +1,6 @@
 package com.patika.userservice.controller;
 
+import com.patika.userservice.auth.UserSecurityInfo;
 import com.patika.userservice.dto.request.LoginRequest;
 import com.patika.userservice.dto.request.UserRequest;
 import com.patika.userservice.dto.response.UserResponse;
@@ -20,9 +21,9 @@ public class AuthController {
 
     private final AuthService authService;
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginRequest request){
+    public ResponseEntity<UserSecurityInfo> login(@Valid @RequestBody LoginRequest request){
 
-        log.debug("REST Request to login : {}",request);
+        log.info("REST Request to login : {}",request.getMail());
 
         return new ResponseEntity<>(authService.login(request), HttpStatus.ACCEPTED);
     }
@@ -34,6 +35,8 @@ public class AuthController {
 
     @PostMapping("/validateToken")
     public ResponseEntity<UserResponse> validateToken (@RequestParam String token){
+        log.info("REST Request to validate token");
+
         return new ResponseEntity<>(authService.validateToken(token), HttpStatus.OK);
     }
 

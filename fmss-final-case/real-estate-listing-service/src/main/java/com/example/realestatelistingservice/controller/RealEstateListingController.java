@@ -23,6 +23,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/listing")
@@ -80,5 +81,13 @@ public class RealEstateListingController {
         log.info("REST Request to find by id {}",id);
 
         return new ResponseEntity<>(realEstateListingService.findById(id),HttpStatus.OK);
+    }
+
+    @GetMapping("user/{userId}")
+    public ResponseEntity<List<RealEstateListingResponse>> findAllByUserId(@PathVariable Long userId,
+                                                                           @RequestParam(value = "status",required = false) Optional<ListingStatus> status){
+        log.info("REST Request to find by id {}",userId);
+
+        return new ResponseEntity<>(realEstateListingService.findAllByUserId(userId,status),HttpStatus.OK);
     }
 }
