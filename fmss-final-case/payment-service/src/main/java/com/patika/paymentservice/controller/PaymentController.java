@@ -17,8 +17,8 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping("/validate")
-    public ResponseEntity<Boolean> paymentValidate(@RequestHeader("x-auth-user-id") Long userId){
+    public ResponseEntity<Boolean> paymentValidate(@RequestHeader("x-auth-user-id") Long userId,@RequestParam int productAmount){
         log.info("Rest request for payment validate by userId:{}",userId);
-        return ResponseEntity.ok(paymentService.paymentValidation(userId));
+        return ResponseEntity.ok(paymentService.paymentValidation(userId,productAmount));
     }
 }

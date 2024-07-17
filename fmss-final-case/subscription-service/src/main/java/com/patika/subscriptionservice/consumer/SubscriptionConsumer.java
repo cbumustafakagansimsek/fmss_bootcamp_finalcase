@@ -1,6 +1,7 @@
 package com.patika.subscriptionservice.consumer;
 
 
+import com.patika.subscriptionservice.dto.request.MultipleSubscriptionRequest;
 import com.patika.subscriptionservice.service.SubscriptionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +15,9 @@ public class SubscriptionConsumer {
 
     private final SubscriptionService subscriptionService;
     @RabbitListener(queues = "${subscription.queue}")
-    public void sendNotification(Long userId) {
-            subscriptionService.save(userId);
-            log.info("subscription :{}", userId);
+    public void sendNotification(MultipleSubscriptionRequest request) {
+            subscriptionService.saveMultiple(request);
+            log.info("subscription :{}", request.getUserId());
     }
 
 

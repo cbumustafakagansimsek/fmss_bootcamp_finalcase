@@ -3,6 +3,7 @@ package com.patika.subscriptionservice.service;
 import com.patika.subscriptionservice.client.user.response.UserResponse;
 import com.patika.subscriptionservice.client.user.service.UserService;
 import com.patika.subscriptionservice.converter.SubscriptionConverter;
+import com.patika.subscriptionservice.dto.request.MultipleSubscriptionRequest;
 import com.patika.subscriptionservice.dto.response.SubscriptionResponse;
 import com.patika.subscriptionservice.exception.SubscriptionNotFoundException;
 import com.patika.subscriptionservice.model.Subscription;
@@ -48,6 +49,12 @@ public class SubscriptionService {
             userService.updateRoleAsSubscribed(id);
         }
 
+    }
+
+    public void saveMultiple(MultipleSubscriptionRequest request){
+        for (int i=0;i< request.getProductAmount();i++){
+            save(request.getUserId());
+        }
     }
 
     public SubscriptionResponse findCurrentSubscription(Long userId){
