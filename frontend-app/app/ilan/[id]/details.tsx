@@ -1,9 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import Publisher from './publisher';
-import { notFound } from 'next/navigation';
-
-
 const getListing=async (id:string) => {
     try{
         const response = await fetch("http://localhost:8080/api/v1/listing/"+id,{cache:"default"});
@@ -13,20 +9,21 @@ const getListing=async (id:string) => {
         return await response.json();
     }catch(error){
         console.log(error );
-        notFound();
+    }finally{
+        return [];
     }
-}
+    
+  
+  }
 
 
-export default async function page({params}:any) {
-    const listing= await getListing(params.id);
+export default async function Details({id}:{id:string}) {
+    const listing= await getListing(id);
     
   return (
-    <div className='container mx-auto px-4'>
-        <Publisher id={listing.userId}></Publisher>
-
-        <div className='bg-white p-5 my-5 rounded-lg shadow-lg'>
-            <h1 className='text-2xl font-semibold py-5'>Lorem ipsum dolor sit amet.</h1>
+    <div className='bg-white p-5 my-5 rounded-lg shadow-lg'>
+            <span className='text-lg font-semibold'>yayınlanma tarihi: <span className='font-normal'>{listing.postedDate}</span></span>
+            <h1 className='text-2xl font-semibold py-5'>{listing.title}</h1>
             <div className='relative h-[50vw]'>
             <Image
                 src={"/home_image.jpeg"}
@@ -46,7 +43,7 @@ export default async function page({params}:any) {
                     {listing.houseType=="FLAT"?"Apartman":""}
                     {listing.houseType=="VILLA"?"Villa":""}
                     {listing.houseType=="DETACHED_HOUSE"?"Müstakil Ev":""}
-                    </span></span>                      
+                    </span></span>
                 <span className='text-lg font-semibold'>m²: <span className='font-normal'>{listing.size}</span></span>
                 <span className='text-lg font-semibold'>Oda Sayısı: <span className='font-normal'>{listing.numberOfRooms}+{listing.numberOfLivingRooms}</span></span>
                 <span className='text-lg font-semibold'>Fiyat: <span className='font-normal'>{listing.amount}</span></span>
@@ -60,9 +57,5 @@ export default async function page({params}:any) {
             </div>
             
         </div>
-        
-         
-       
-    </div>
   )
 }

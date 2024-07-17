@@ -40,7 +40,7 @@ export default function page() {
 
 
   return (
-    <div className='flex justify-center items-center h-[100vh]'>
+    <div className='flex justify-center items-center '>
       
         <div className=' border rounded-lg p-5 bg-white'>
             <h2 className='text-2xl font-semibold border-b mb-5'>GİRİŞ</h2>

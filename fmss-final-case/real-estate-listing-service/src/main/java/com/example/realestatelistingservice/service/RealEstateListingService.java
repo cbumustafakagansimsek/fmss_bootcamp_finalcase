@@ -65,7 +65,7 @@ public class RealEstateListingService {
 
     public SearchResponse searchAll(RealEstateListingSearchRequest request){
 
-        log.info("Request to search all real estate listing");
+        log.info("Request to search all real estate listing by:{}",request);
 
         Specification<RealEstateListing> productSpecification = RealEstateListingSpesification.initRealEstateListingSpecification(request);
 

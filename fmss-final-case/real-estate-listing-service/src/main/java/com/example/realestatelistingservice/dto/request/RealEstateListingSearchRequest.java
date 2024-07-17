@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class RealEstateListingSearchRequest extends BaseSearchRequest {
 
     private String province;

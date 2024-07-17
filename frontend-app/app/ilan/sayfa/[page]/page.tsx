@@ -1,40 +1,16 @@
 
-import Listing from '@/components/listing/listing';
+import Listing from '@/app/ilan/sayfa/[page]/listing';
 import React, { Suspense, useState } from 'react'
+import SearchListing from './search-listing';
 
-type searchRequest ={
-    page:number,
-    size:number,
-    sort:string,
-    province:string,
-    district:string,
-    minSize:number,
-    maxSize:number,
-    numberOfRooms:number,
-    numberOfLivingRooms:number
-}
-
-export default function page({params}:any) {
-  // const [page,setPage] = useState(+params.page-1);
-  // const [size,setSize] = useState(5);
-  // const [sort,setSort] = useState("ASC");
-  // const [province,setProvince] = useState(null);
-  // const [district,setDistrict] = useState(null);
-  // const [minSize,setMinSize] = useState(null);
-  // const [maxSize,setMaxSize] = useState(null);
-  // const [numberOfRooms,setNumberOfRooms] = useState(null);
-  // const [numberOfLivingRooms,setNumberOfLivingRooms] = useState(null);
-
-
+export default function page({params,searchParams}:any) {
 
   return (
     <div className='container mx-auto px-4'>
       <div>
-        <form action="">
-
-        </form>
+       <SearchListing></SearchListing>
       </div>
-        <Listing page={params.page}></Listing>
+        <Listing page={params.page} searchParams={searchParams}></Listing>
     </div>
   )
 }

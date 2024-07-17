@@ -26,8 +26,11 @@ public class RealEstateListingSpesification {
                 predicateList.add(criteriaBuilder.like(root.get("district"),"%" + request.getDistrict()+"%"));
             }
 
-            if (request.getMaxSize() != null && request.getMinSize() != null) {
-                predicateList.add(criteriaBuilder.between(root.get("size"), request.getMinSize(), request.getMaxSize()));
+            if (request.getMinSize() != null) {
+                predicateList.add(criteriaBuilder.greaterThanOrEqualTo(root.get("size"), request.getMinSize()));
+            }
+            if (request.getMaxSize() != null) {
+                predicateList.add(criteriaBuilder.lessThanOrEqualTo(root.get("size"), request.getMaxSize()));
             }
 
             if (request.getNumberOfRooms() != null) {

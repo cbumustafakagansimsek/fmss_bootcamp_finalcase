@@ -3,13 +3,12 @@ import Link from 'next/link';
 import React from 'react'
 import { FaArrowLeft,FaArrowRight  } from "react-icons/fa6";
 
-const getListing =async (body:any) => {
+const getListing =async (page:number,searchParams:any) => {
   
 
-  let query = new URLSearchParams(body).toString();
-  console.log(query);
+  let query = new URLSearchParams(searchParams).toString();
   
-   const response = await fetch("http://localhost:8080/api/v1/listing?"+query
+   const response = await fetch(`http://localhost:8080/api/v1/listing?page=${page-1}&size=10&sort=ASC&`+query
   
    ,{
      cache:'no-store',
@@ -17,20 +16,17 @@ const getListing =async (body:any) => {
    }
    
    );
+   const data = await response.json()
 
-  return await response.json();
+  return data;
 
 }
 
-export default async function Listing({page}:any) {
-  const body ={
-    page:+page-1,
-    size:5,
-    sort:"ASC"
-  }
-  const data = await getListing(body);
-  const listings = data.response;
-  console.log(data);
+export default async function Listing({page,searchParams}:any) {
+  
+  const data = await getListing(page,searchParams);
+  const listings:any[] = data.response;
+  
 
   
   
@@ -48,9 +44,11 @@ export default async function Listing({page}:any) {
 
   }
   return (
-    <div className='container mx-auto px-4'>
+    <div className='container mx-auto px-4 py-10'>
         
 
+       
+        {listings.length==0?<p className='text-center text-3xl '>İlan Bulunamadı</p>:""}
         <div className='my-32 flex justify-center flex-wrap gap-8'>
             {listings.map((listing:any,index:number)=><Card key={index} listing={listing}></Card>)}
         </div>

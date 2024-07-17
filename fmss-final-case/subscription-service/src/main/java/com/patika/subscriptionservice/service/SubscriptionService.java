@@ -54,14 +54,14 @@ public class SubscriptionService {
         log.info("Request to find current subscription by id:{}",userId);
         Subscription subscription = subscriptionRepository.findAllByUserId(userId).stream()
                 .collect(Collectors.minBy(Comparator.comparing(Subscription::getEndDate)))
-                .orElseThrow(()-> new SubscriptionNotFoundException("Subcription not found by userId"+userId));
+                .orElseThrow(()-> new SubscriptionNotFoundException("Subcription not found by userId:"+userId));
 
         return subscriptionConverter.toResponse(subscription);
 
     }
 
     @Scheduled(cron = "0 0 0 * * ?")
-    private void cancelExpiredSubscription() {
+    public void cancelExpiredSubscription() {
         log.info("Cancellation of scheduled Expired subscriptions");
         //List of users' latest subscription packages
         List<Subscription> subscriptions = subscriptionRepository.findAll().stream()

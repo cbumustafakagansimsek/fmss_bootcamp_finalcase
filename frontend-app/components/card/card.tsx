@@ -7,7 +7,6 @@ import { LiaRulerCombinedSolid } from "react-icons/lia";
 
 
 export default function Card({listing}:any) {
-    console.log(listing);
     
   return (
     <Link href={"/ilan/"+listing.id} className='block w-[300px] bg-white rounded-lg overflow-hidden hover:scale-105 duration-100 shadow-lg'>

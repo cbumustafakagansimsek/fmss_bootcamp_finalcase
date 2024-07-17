@@ -17,7 +17,6 @@ export default function page({params}:any) {
     if(response.status==200){
       redirect(`/user/${params.id}`)
     }
-    console.log(response.status==200);
   }
   return (
     <div className='container mx-auto h-[100vh] flex justify-center items-center'>

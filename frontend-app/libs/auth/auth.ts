@@ -1,5 +1,6 @@
 import { jwtVerify } from "jose";
 import { jwtDecode } from "jwt-decode";
+import { cookies } from "next/headers";
 
 //  export function getJwtSecretKey() {
 //    const secret =process.env.JWT_SECRET_KEY;
@@ -33,3 +34,7 @@ export async function verifyJwtToken(token:any) {
     return null;
   }
 }
+
+export async function exitAcount() {
+    cookies().delete("token");
+  }

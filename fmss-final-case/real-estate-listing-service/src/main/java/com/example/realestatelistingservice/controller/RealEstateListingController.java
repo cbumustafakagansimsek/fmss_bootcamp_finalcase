@@ -71,7 +71,7 @@ public class RealEstateListingController {
 
     @GetMapping()
     public ResponseEntity<SearchResponse> searchAll(RealEstateListingSearchRequest request){
-        log.info("REST Request to search all real estate listing");
+        log.info("REST Request to search all real estate listing by:{}",request);
 
         return new ResponseEntity<>(realEstateListingService.searchAll(request),HttpStatus.OK);
     }
