@@ -11,7 +11,7 @@ public class SubscriptionConverter {
 
         return SubscriptionResponse.builder()
                 .id(subscription.getId())
-                .listingLimit(subscription.getListingLimit())
+                .adLimit(subscription.getAdLimit())
                 .startDate(subscription.getStartDate())
                 .endDate(subscription.getEndDate())
                 .userId(subscription.getUserId())

@@ -28,7 +28,7 @@ class SubscriptionConverterTest {
                 .set(field("userId" ),2L)
                 .set(field("startDate" ),LocalDate.now())
                 .set(field("endDate" ),LocalDate.now().plusMonths(1))
-                .set(field("listingLimit" ),10)
+                .set(field("adLimit" ),10)
                 .create();
 
         SubscriptionResponse response = subscriptionConverter.toResponse(subscription);
@@ -37,6 +37,6 @@ class SubscriptionConverterTest {
         assertEquals(subscription.getUserId(), response.getUserId());
         assertEquals(subscription.getStartDate(), response.getStartDate());
         assertEquals(subscription.getEndDate(), response.getEndDate());
-        assertEquals(subscription.getListingLimit(), response.getListingLimit());
+        assertEquals(subscription.getAdLimit(), response.getAdLimit());
     }
 }

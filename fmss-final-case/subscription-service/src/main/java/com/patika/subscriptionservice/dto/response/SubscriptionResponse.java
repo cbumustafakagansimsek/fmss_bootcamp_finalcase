@@ -14,7 +14,7 @@ public class SubscriptionResponse {
 
     private Long id;
 
-    private int listingLimit;
+    private int adLimit;
 
     private LocalDate startDate;
 

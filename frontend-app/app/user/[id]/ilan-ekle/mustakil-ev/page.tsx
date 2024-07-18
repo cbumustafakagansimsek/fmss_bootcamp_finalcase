@@ -10,7 +10,7 @@ export default function page({params}:any) {
     const [error,setError] = useState("");
     
 
-    async function createListing(event: FormEvent<HTMLFormElement>) {
+    async function createAd(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const formData = new FormData(event.currentTarget)
 
@@ -27,7 +27,7 @@ export default function page({params}:any) {
             yardSize: formData.get("yardSize")
         }
         
-        const response = await fetch("http://localhost:8080/api/v1/listing/secure/detached-house",{
+        const response = await fetch("http://localhost:8080/api/v1/ads/secure/detached-house",{
             method:"POST",
             headers:{
                 Authorization:`Bearer ${cookies.get("token")}`,
@@ -47,7 +47,7 @@ export default function page({params}:any) {
     }
   return (
     <div className='container mx-auto py-32 flex justify-center'>
-        <form onSubmit={createListing} className='flex flex-col gap-5 bg-white rounded-lg p-5 shadow-lg'>
+        <form onSubmit={createAd} className='flex flex-col gap-5 bg-white rounded-lg p-5 shadow-lg'>
             <h1 className='text-lg font-semibold text-black'>Müstakil Ev Kaydet</h1>
 
             <div className='flex flex-col'>

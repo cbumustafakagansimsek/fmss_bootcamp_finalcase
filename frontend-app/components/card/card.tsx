@@ -6,10 +6,10 @@ import { IoBedOutline } from "react-icons/io5";
 import { LiaRulerCombinedSolid } from "react-icons/lia";
 
 
-export default function Card({listing}:any) {
+export default function Card({ad}:any) {
     
   return (
-    <Link href={"/ilan/"+listing.id} className='block w-[300px] bg-white rounded-lg overflow-hidden hover:scale-105 duration-100 shadow-lg'>
+    <Link href={"/ilan/"+ad.id} className='block w-[300px] bg-white rounded-lg overflow-hidden hover:scale-105 duration-100 shadow-lg'>
         <Image
             src={"/home_image.jpeg"}
             width={300} 
@@ -18,17 +18,17 @@ export default function Card({listing}:any) {
         />
         <div className='p-3 flex flex-col'>
             <div className=' border-b'>
-                <h2 className='text-xl font-semibold text-slate-600'>{listing.title}</h2>
-                <span className='text-slate-400'>{listing.province},{listing.district}</span>
+                <h2 className='text-xl font-semibold text-slate-600'>{ad.title}</h2>
+                <span className='text-slate-400'>{ad.province},{ad.district}</span>
             </div>
             <div className='flex gap-2'>
-                <span className='flex items-center'><IoBedOutline/>{listing.numberOfRooms}</span>
-                <span className='flex items-center'><MdOutlineChair />{listing.numberOfLivingRooms}</span> 
-                <span className='flex items-center'><LiaRulerCombinedSolid />{listing.size} m²</span>
+                <span className='flex items-center'><IoBedOutline/>{ad.numberOfRooms}</span>
+                <span className='flex items-center'><MdOutlineChair />{ad.numberOfLivingRooms}</span> 
+                <span className='flex items-center'><LiaRulerCombinedSolid />{ad.size} m²</span>
             </div>
 
             
-            <span className='text-xl py-3 font-semibold'>{listing.amount} ₺</span>
+            <span className='text-xl py-3 font-semibold'>{ad.amount} ₺</span>
 
         </div>
     </Link>

@@ -1,16 +1,16 @@
 
-import Listing from '@/app/ilan/sayfa/[page]/listing';
+import Ad from '@/app/ilan/sayfa/[page]/ad';
 import React, { Suspense, useState } from 'react'
-import SearchListing from './search-listing';
+import SearchAd from './search-ad';
 
 export default function page({params,searchParams}:any) {
 
   return (
     <div className='container mx-auto px-4'>
       <div>
-       <SearchListing></SearchListing>
+       <SearchAd></SearchAd>
       </div>
-        <Listing page={params.page} searchParams={searchParams}></Listing>
+        <Ad page={params.page} searchParams={searchParams}></Ad>
     </div>
   )
 }

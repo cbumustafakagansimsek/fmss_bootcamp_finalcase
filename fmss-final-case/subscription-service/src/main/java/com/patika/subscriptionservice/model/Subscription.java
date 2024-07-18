@@ -14,8 +14,8 @@ public class Subscription {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "listing_limit",nullable = false)
-    private int listingLimit;
+    @Column(name = "ad_limit",nullable = false)
+    private int adLimit;
 
     @Column(name = "start_date",nullable = false)
     private LocalDate startDate;
@@ -27,7 +27,7 @@ public class Subscription {
     private Long userId;
 
     public Subscription(LocalDate startDate, LocalDate endDate, Long userId) {
-        this.listingLimit = 10;
+        this.adLimit = 10;
         this.startDate = startDate;
         this.endDate = endDate;
         this.userId = userId;

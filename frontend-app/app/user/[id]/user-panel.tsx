@@ -1,5 +1,5 @@
 import React from 'react'
-import AddListingNavigation from '@/components/add-listing-navigation/navigation';
+import AddAdNavigation from '@/components/add-ad-navigation/navigation';
 import Link from 'next/link';
 import { FaCheck } from "react-icons/fa";
 import { ImCross } from "react-icons/im";
@@ -41,7 +41,7 @@ export default async function UserPanel({id}:any) {
     </div>
     <div className='bg-white rounded-lg p-5 my-5 shadow-lg'>
     <h1 className='text-2xl font-semibold text-black text-center py-2'>İlan Kaydet</h1>
-        <AddListingNavigation id={id}></AddListingNavigation>
+        <AddAdNavigation id={id}></AddAdNavigation>
     </div>
 
 
