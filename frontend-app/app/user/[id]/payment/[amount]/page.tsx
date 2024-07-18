@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
@@ -8,7 +9,7 @@ export default function page({params}:any) {
     "use server"
 
     const cookieStore = cookies()
-    const response = await fetch("http://localhost:8080/api/v1/payment/validate",{
+    const response = await fetch(`http://localhost:8080/api/v1/payment/validate?productAmount=${params.amount}`,{
       method:"POST",
       headers:{
         Authorization:`Bearer ${cookieStore.get("token")?.value}`
@@ -19,8 +20,10 @@ export default function page({params}:any) {
     }
   }
   return (
-    <div className='container mx-auto h-[100vh] flex justify-center items-center'>
+    <div className='w-full mx-auto h-[100vh] flex justify-center items-center absolute top-0 bg-black bg-opacity-40'>
       <form action={payment} className='flex flex-col gap-5 max-w-[400px] text-lg bg-white rounded-lg shadow-lg p-5'>
+        <span className='text-red-600 font-semibold text-right'><Link href={`/user/${params.id}/ilan`} >İptal</Link></span>
+        <span>{params.amount} Aylık Abonelik</span>
           <div className='flex flex-col'>
             <label htmlFor="">Kart Sahibi</label>
             <input type="text" className='block border-2 rounded-lg p-2'/>
