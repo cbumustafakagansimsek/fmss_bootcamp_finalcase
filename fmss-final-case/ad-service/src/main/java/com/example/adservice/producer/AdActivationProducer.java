@@ -14,8 +14,8 @@ public class AdActivationProducer {
     private final AmqpTemplate rabbitTemplate;
     private final RabbitProducerConfig rabbitProducerConfig;
 
-    public void sendAdActivation(Long userId) {
-        rabbitTemplate.convertAndSend(rabbitProducerConfig.getExchange(), rabbitProducerConfig.getRoutingKey(), userId);
+    public void sendAdActivation(AdActivationDto dto) {
+        rabbitTemplate.convertAndSend(rabbitProducerConfig.getExchange(), rabbitProducerConfig.getRoutingKey(), dto);
         log.info("Subscription sent exchange:{}", rabbitProducerConfig.getExchange());
     }
 

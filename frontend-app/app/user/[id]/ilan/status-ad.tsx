@@ -1,12 +1,10 @@
 "use client"
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
 
 export default function StatusFilter() {
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const { replace } = useRouter();
-    const[status,setStatus] = useState("")
    
     function handleFilter(status:string) {
 

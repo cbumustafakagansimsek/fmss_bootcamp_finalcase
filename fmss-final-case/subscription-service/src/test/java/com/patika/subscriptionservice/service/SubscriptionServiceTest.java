@@ -1,5 +1,7 @@
 package com.patika.subscriptionservice.service;
 
+import com.patika.subscriptionservice.client.ad.service.AdService;
+import com.patika.subscriptionservice.client.ad.service.AdStatus;
 import com.patika.subscriptionservice.client.user.service.UserService;
 import com.patika.subscriptionservice.converter.SubscriptionConverter;
 import com.patika.subscriptionservice.dto.response.SubscriptionResponse;
@@ -11,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 
@@ -38,14 +39,15 @@ class SubscriptionServiceTest {
     @Mock
     private UserService userService;
 
+    @Mock
+    private AdService adService;
     @InjectMocks
     private SubscriptionService subscriptionService;
 
 
-
+    private static final Long USER_ID=1L;
     @Test
-    void testSave_WithExistingSubscription() {
-        Long userId = 1L;
+    void testSave_withExistingSubscription() {
         LocalDate now = LocalDate.now();
         Subscription existingSubscription = Instancio.of(Subscription.class)
                 .set(field("startDate"),now)
@@ -53,16 +55,16 @@ class SubscriptionServiceTest {
                 .set(field("userId"),1L)
                 .create();
 
-        when(subscriptionRepository.findTopByUserIdOrderByEndDateDesc(userId))
+        when(subscriptionRepository.findTopByUserIdOrderByEndDateDesc(USER_ID))
                 .thenReturn(Optional.of(existingSubscription));
 
-        subscriptionService.save(userId);
+        subscriptionService.save(USER_ID);
 
-        verify(subscriptionRepository, times(1)).save(Mockito.any(Subscription.class));
+        verify(subscriptionRepository, times(1)).save(any(Subscription.class));
     }
 
     @Test
-    void testSave_WithoutExistingSubscription() {
+    void testSave_withoutExistingSubscription() {
         Long userId = 1L;
 
         when(subscriptionRepository.findTopByUserIdOrderByEndDateDesc(userId))
@@ -70,13 +72,12 @@ class SubscriptionServiceTest {
 
         subscriptionService.save(userId);
 
-        verify(subscriptionRepository, times(1)).save(Mockito.any(Subscription.class));
+        verify(subscriptionRepository, times(1)).save(any(Subscription.class));
         verify(userService, times(1)).updateRoleAsSubscribed(userId);
     }
 
     @Test
-    void testFindCurrentSubscription() {
-        Long userId = 1L;
+    void testFindCurrentSubscription_shouldReturnSubscriptionResponse() {
         LocalDate now = LocalDate.now();
         Subscription firstSubscription = Instancio.of(Subscription.class)
                 .set(field("startDate"),now)
@@ -91,12 +92,12 @@ class SubscriptionServiceTest {
         List<Subscription> subscriptions = List.of(firstSubscription,secondSubscription);
         SubscriptionResponse subscriptionResponse = new SubscriptionResponse();
 
-        when(subscriptionRepository.findAllByUserId(userId))
+        when(subscriptionRepository.findAllByUserId(USER_ID))
                 .thenReturn(subscriptions);
         when(subscriptionConverter.toResponse(firstSubscription))
                 .thenReturn(subscriptionResponse);
 
-        SubscriptionResponse result = subscriptionService.findCurrentSubscription(userId);
+        SubscriptionResponse result = subscriptionService.findCurrentSubscription(USER_ID);
 
         verify(subscriptionConverter,times(1)).toResponse(firstSubscription);
         assertEquals(subscriptionResponse, result);
@@ -104,14 +105,13 @@ class SubscriptionServiceTest {
 
     @Test
     void testFindCurrentSubscription_shouldThrowSubscriptionNotFoundException() {
-        Long userId = 1L;
 
         List<Subscription> subscriptions = List.of();
 
-        when(subscriptionRepository.findAllByUserId(userId))
+        when(subscriptionRepository.findAllByUserId(USER_ID))
                 .thenReturn(subscriptions);
 
-        SubscriptionNotFoundException subscriptionNotFoundException = assertThrows(SubscriptionNotFoundException.class,()-> subscriptionService.findCurrentSubscription(userId));
+        SubscriptionNotFoundException subscriptionNotFoundException = assertThrows(SubscriptionNotFoundException.class,()-> subscriptionService.findCurrentSubscription(USER_ID));
         assertThat(subscriptionNotFoundException.getMessage()).isEqualTo("Subcription not found by userId:1");
 
         verifyNoInteractions(subscriptionConverter);
@@ -132,6 +132,8 @@ class SubscriptionServiceTest {
 
         subscriptionService.cancelExpiredSubscription();
 
+        verify(adService, times(1)).updateAllStatusById(AdStatus.PASSIVE,userId_1);
+        verify(adService, times(0)).updateAllStatusById(AdStatus.PASSIVE,userId_2);
         verify(userService, times(1)).updateRoleAsInitial(userId_1);
         verify(userService, times(0)).updateRoleAsInitial(userId_2);
     }

@@ -1,20 +1,38 @@
 "use client"
 
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useState } from 'react'
 import Image from 'next/image'
 import { MdOutlineChair } from "react-icons/md";
 import { IoBedOutline } from "react-icons/io5";
 import { LiaRulerCombinedSolid } from "react-icons/lia";
 import Link from 'next/link';
+import { useCookies } from 'next-client-cookies';
+import { FaCheck } from 'react-icons/fa';
 
 export default function Card({data}:any) {
+    const [success,setSuccess] = useState(false);
+    const cookies = useCookies();
+
 
     async function changeStatus(event: FormEvent<HTMLFormElement>) {
-        const formData = new FormData(event.currentTarget)
         
-        const response = await fetch(`http://localhost:8080/api/v1/ad?status=${formData.get("status")}&id=1`,{
-            method:"PUT"
+        const formData = new FormData(event.currentTarget)
+
+        const response = await fetch(`http://localhost:8080/api/v1/ads/secure/status?status=${formData.get("status")}&id=${formData.get("id")}`,{
+            method:"PUT",
+            headers:{
+                Authorization:`Bearer ${cookies.get("token")}`,
+            }
+            
         })
+        if(response.ok){
+            setSuccess(true)
+            await new Promise(f => setTimeout(f, 700));
+            setSuccess(false)
+            
+        }
+        
+
         
     }
   return (
@@ -25,6 +43,8 @@ export default function Card({data}:any) {
                 <input type="radio" name='status' value={"ACTIVE"} defaultChecked={data.status === "ACTIVE"}/>
                 <label htmlFor="">Pasif</label>
                 <input type="radio" name='status' value={"PASSIVE"} defaultChecked={data.status === "PASSIVE"}/>
+                <input type="number" name='id' defaultValue={data.id} className='hidden' />
+                {success?<FaCheck className='text-green-600' />:""}
             </form>
         </div>
         <Image

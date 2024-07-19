@@ -2,6 +2,7 @@
 import React, { FormEvent } from 'react'
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCookies } from 'next-client-cookies';
+import { jwtDecode } from "jwt-decode";
 
 
 export default function page() {
@@ -31,7 +32,7 @@ export default function page() {
     if (resData) {
       cookies.set("token",resData.token);
       const nextUrl = searchParams.get("next");
-      router.push(nextUrl ?? "/user/1");
+      router.push(nextUrl ?? "/");
       router.refresh();
     } else {
       alert("Login failed");

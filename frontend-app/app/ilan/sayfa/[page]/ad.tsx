@@ -5,10 +5,9 @@ import { FaArrowLeft,FaArrowRight  } from "react-icons/fa6";
 
 const getAd =async (page:number,searchParams:any) => {
   
-
   let query = new URLSearchParams(searchParams).toString();
   
-   const response = await fetch(`http://localhost:8080/api/v1/ads?page=${page-1}&size=10&sort=ASC&`+query
+   const response = await fetch(`http://localhost:8080/api/v1/ads/search/active?page=${page-1}&size=10&sort=ASC&`+query
   
    ,{
      cache:'no-store',

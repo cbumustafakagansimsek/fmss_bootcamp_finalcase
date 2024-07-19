@@ -12,8 +12,8 @@ public interface UserClient {
     @GetMapping("/{id}")
     ResponseEntity<UserResponse> findById(@PathVariable Long id);
 
-    @PutMapping("role/subscribed/{id}")
-    ResponseEntity<UserResponse> updateRoleAsSubscribed(@PathVariable Long id);
-    @PutMapping("role/initial/{id}")
-    ResponseEntity<UserResponse> updateRoleAsInitial(@PathVariable Long id);
+//    @PutMapping("role/subscribed/{id}")
+//    ResponseEntity<UserResponse> updateRoleAsSubscribed(@PathVariable Long id);
+//    @PutMapping("role/initial/{id}")
+//    ResponseEntity<UserResponse> updateRoleAsInitial(@PathVariable Long id);
 }

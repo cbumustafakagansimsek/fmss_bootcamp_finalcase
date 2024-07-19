@@ -1,9 +1,11 @@
-import Card from '@/components/user-ads/card';
+import Card from '@/app/user/[id]/ilan/card';
 import React from 'react'
 import StatusFilter from './status-ad';
 
 
 const getAdForUser =async (id:string,status:string) => {
+    console.log("girdi");
+    
     var query = ""
     if(status){
         query = "status="+status;
@@ -24,7 +26,10 @@ export default async function page({params,searchParams}
     }) {
     
     const data = await getAdForUser(params.id,searchParams.status);
+        console.log(data);
+        console.log("----------------");
 
+        
     return (
         <div className='container mx-auto px-4'>
             <div className='flex justify-end'>

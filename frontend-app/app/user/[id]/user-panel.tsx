@@ -29,12 +29,12 @@ export default async function UserPanel({id}:any) {
         </div>
     </div>
     <div className='flex flex-wrap gap-5 justify-center bg-white rounded-lg p-5 shadow-lg'>
-        <Link href={"/user/1/payment/1"} className='bg-white text-black rounded-lg min-h-[250px] min-w-[300px] w-[40%] flex justify-center items-center flex-col border-2 border-black hover:bg-slate-200'>
+        <Link href={`/user/${id}/payment/1`} className='bg-white text-black rounded-lg min-h-[250px] min-w-[300px] w-[40%] flex justify-center items-center flex-col border-2 border-black hover:bg-slate-200'>
             <h2 className='text-2xl font-semibold'>1 Aylık Abonelik</h2>
             <span>Aylık 10 İlan Yayınlama Hakkı</span>
         </Link>
 
-        <Link href={"/user/1/payment/10"} className='bg-white text-black rounded-lg min-h-[250px] min-w-[300px] w-[40%] flex justify-center items-center flex-col border-2 border-black hover:bg-slate-200 '>
+        <Link href={`/user/${id}/payment/10`} className='bg-white text-black rounded-lg min-h-[250px] min-w-[300px] w-[40%] flex justify-center items-center flex-col border-2 border-black hover:bg-slate-200 '>
             <h2 className='text-2xl font-semibold'>10 Aylık Abonelik</h2>
             <span>Aylık 10 İlan Yayınlama Hakkı</span>
         </Link>

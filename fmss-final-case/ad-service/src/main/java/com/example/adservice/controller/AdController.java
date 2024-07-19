@@ -55,20 +55,21 @@ public class AdController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping
+    @PutMapping("/secure/status")
     public ResponseEntity<Void> updateStatus(@RequestParam AdStatus status,
-                                             @RequestParam Long id){
-        log.info("REST Request to update status as {} by id:{}",status,id);
+                                             @RequestParam Long id,
+                                             @RequestHeader("x-auth-user-id") Long userid){
+        log.info("REST Request to update status as {} by id:{}",status,userid);
 
-        adService.updateStatus(status,id);
+        adService.updateStatus(status,id,userid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping()
-    public ResponseEntity<SearchResponse> searchAll(AdSearchRequest request){
-        log.info("REST Request to search all real estate ad by:{}",request);
+    @GetMapping("search/active")
+    public ResponseEntity<SearchResponse> searchActive(AdSearchRequest request){
+        log.info("REST Request to active all real estate ad by:{}",request);
 
-        return new ResponseEntity<>(adService.searchAll(request),HttpStatus.OK);
+        return new ResponseEntity<>(adService.searchActive(request),HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
@@ -85,4 +86,14 @@ public class AdController {
 
         return new ResponseEntity<>(adService.findAllByUserId(userId,status),HttpStatus.OK);
     }
+
+    @PutMapping("secure/status/user")
+    public ResponseEntity<Void> updateAllStatusByUser(@RequestParam AdStatus status,
+                                             @RequestHeader("x-auth-user-id") Long id){
+        log.info("REST Request to update all status as {} by id:{}",status,id);
+
+        adService.updateAllStatusByUser(status,id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

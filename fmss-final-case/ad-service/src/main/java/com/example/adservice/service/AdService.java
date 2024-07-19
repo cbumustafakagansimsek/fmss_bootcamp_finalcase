@@ -17,6 +17,7 @@ import com.example.adservice.factory.impl.FlatFactory;
 import com.example.adservice.factory.impl.VillaFactory;
 import com.example.adservice.model.Ad;
 import com.example.adservice.model.AdStatus;
+import com.example.adservice.producer.AdActivationDto;
 import com.example.adservice.producer.AdActivationProducer;
 import com.example.adservice.repository.AdRepository;
 import com.example.adservice.repository.spesification.AdSpesification;
@@ -35,7 +36,7 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class AdService {
-    private final AdRepository AdRepository;
+    private final AdRepository adRepository;
 
     private final AdConverter adConverter;
 
@@ -56,26 +57,27 @@ public class AdService {
         }
 
         //If 10 usage rights have expired
-        if (AdRepository.countByUserId(ad.getUserId())>=subscriptionService.findCurrentSubscription(ad.getUserId()).getAdLimit()){
+        if (adRepository.countByUserId(ad.getUserId())>=subscriptionService.findCurrentSubscription(ad.getUserId()).getAdLimit()){
         throw new ExhaustedAdLimitException("Ad posting limit has been exhausted.");
         }
 
-        Ad ad_ = AdRepository.save(ad);
+        Ad ad_ = adRepository.save(ad);
 
+        AdActivationDto dto = new AdActivationDto(ad_.getId(),userId);
         //Directs the ad to the activation service
-        adActivationProducer.sendAdActivation(ad_.getId());
+        adActivationProducer.sendAdActivation(dto);
     }
 
-    public SearchResponse searchAll(AdSearchRequest request){
+    public SearchResponse searchActive(AdSearchRequest request){
 
-        log.info("Request to search all real estate ad by:{}",request);
+        log.info("Request to search active real estate ad by:{}",request);
 
         Specification<Ad> adSpecification = AdSpesification.initRealEstateAdSpecification(request);
 
         PageRequest pageRequest = PageRequest.of(request.getPage(), request.getSize(), Sort.by(request.getSort(), "amount"));
 
 
-        Page<Ad> ads = AdRepository.findAll(adSpecification, pageRequest);
+        Page<Ad> ads = adRepository.findAll(adSpecification, pageRequest);
         return SearchResponse.builder()
                 .response(adConverter.toResponse(ads.stream().toList()))
                 .totalPageNumber(ads.getTotalPages())
@@ -83,30 +85,44 @@ public class AdService {
 
     }
 
-    public void updateStatus(AdStatus status, Long id){
+    public void updateStatus(AdStatus status, Long id,Long userId){
         log.info("Request to update status as {} by id:{}",status,id);
 
-        Ad ad = AdRepository.findById(id)
+        Ad ad = adRepository.findByIdAndUserId(id,userId)
                 .orElseThrow(()->new AdNotFoundException("Real estate ad not found by id:"+id));
 
         ad.setStatus(status);
 
-        AdRepository.save(ad);
+        adRepository.save(ad);
     }
 
     public AdResponse findById(Long id){
         log.info("Request to find by id {}",id);
-        Ad ad = AdRepository.findById(id).orElseThrow(()->new AdNotFoundException("Real estate ad not found by id:"+id));
+        Ad ad = adRepository.findById(id).orElseThrow(()->new AdNotFoundException("Real estate ad not found by id:"+id));
         return adConverter.toResponse(ad) ;
     }
 
     public List<AdResponse> findAllByUserId(Long userId, Optional<AdStatus> status){
         log.info("Request to find all by id {} with status: {}",userId,status);
         if (status.isPresent()){
-            return adConverter.toResponse(AdRepository.findAllByUserIdAndStatus(userId,status.get())) ;
+            return adConverter.toResponse(adRepository.findAllByUserIdAndStatus(userId,status.get())) ;
         }
 
-        return adConverter.toResponse(AdRepository.findAllByUserId(userId)) ;
+        return adConverter.toResponse(adRepository.findAllByUserId(userId)) ;
+    }
+
+
+    public void updateAllStatusByUser(AdStatus status, Long id){
+        log.info("Request to update status as {} by id:{}",status,id);
+        List<Ad> ads = adRepository.findAllByUserId(id);
+
+        ads = ads.stream()
+                .filter(it->it.getStatus().equals(AdStatus.ACTIVE))
+                .peek(it->it.setStatus(AdStatus.PASSIVE))
+                .toList();
+
+        adRepository.saveAll(ads);
+
     }
 
     

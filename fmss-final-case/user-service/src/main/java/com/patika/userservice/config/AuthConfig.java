@@ -26,11 +26,11 @@ public class AuthConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http.csrf().disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/api/v1/**").permitAll()
-                .and()
-                .build();
+        return http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorize  -> authorize
+                        .requestMatchers("/api/v1/**").permitAll()
+                ).build();
     }
 
     @Bean

@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 public class AdService {
     private final AdClient adClient;
 
-    public void updateStatus(AdStatus status, Long id){
+    public void updateStatus(AdStatus status, Long id,Long userId){
         log.info("request to update status for status:{} by id:{}",status,id);
-        adClient.updateStatus(status, id);
+        adClient.updateStatus(status, id,userId);
     }
 }

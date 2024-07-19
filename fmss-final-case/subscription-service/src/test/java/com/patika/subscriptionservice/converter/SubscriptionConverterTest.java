@@ -20,7 +20,7 @@ class SubscriptionConverterTest {
     private SubscriptionConverter subscriptionConverter;
 
     @Test
-    void testToResponse() {
+    void testToResponse_shouldReturnSubscriptionResponse() {
 
 
         Subscription subscription = Instancio.of(Subscription.class)

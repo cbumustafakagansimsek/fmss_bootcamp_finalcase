@@ -1,4 +1,4 @@
-import Card from '@/components/user-ads/card';
+import Card from '@/app/user/[id]/ilan/card';
 import React from 'react'
 const getAdForUser =async (id:string) => {
     const response = await fetch(`http://localhost:8080/api/v1/ads/user/${id}?status=ACTIVE` 

@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class AdActivationConsumer {
 
-    private final AdService subscriptionService;
+    private final AdService adService;
     @RabbitListener(queues = "${ad.activation.queue}")
-    public void sendNotification(Long id) {
-        subscriptionService.updateStatus(AdStatus.ACTIVE, id);
-        log.info("Ad activation queue for id :{}", id);
+    public void sendNotification(AdActivationDto dto) {
+        adService.updateStatus(AdStatus.ACTIVE, dto.getId(), dto.getUserId());
+        log.info("Ad activation queue for id :{}", dto.getId());
     }
 
 

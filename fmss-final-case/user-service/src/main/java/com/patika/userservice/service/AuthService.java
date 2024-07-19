@@ -6,6 +6,7 @@ import com.patika.userservice.dto.request.LoginRequest;
 import com.patika.userservice.dto.request.UserRequest;
 import com.patika.userservice.dto.response.UserResponse;
 import com.patika.userservice.exception.TokenIsNotValidException;
+import com.patika.userservice.exception.UserNotFoundException;
 import com.patika.userservice.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -24,8 +25,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @RequiredArgsConstructor
 public class AuthService {
-    @Value("${finalcase.app.secret}")
-    private String APP_SECRET ;
     private final UserService userService;
 
     private final AuthenticationManager authenticationManager;
@@ -35,12 +34,16 @@ public class AuthService {
 
     public UserSecurityInfo login(LoginRequest request){
         log.debug("Request to login : {}",request);
-
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getMail(), request.getPassword());
-        Authentication auth = authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(auth);
-        String jwtToken = jwtTokenProvider.generateJwtToken(auth);
-        return UserSecurityInfo.builder().token(jwtToken).build();
+        try {
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(request.getMail(), request.getPassword());
+            Authentication auth = authenticationManager.authenticate(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            String jwtToken = jwtTokenProvider.generateJwtToken(auth);
+            return UserSecurityInfo.builder().token(jwtToken).build();
+        }
+        catch (Exception e){
+            throw new UserNotFoundException("Your login was not accepted");
+        }
     }
 
     public boolean register(UserRequest request){

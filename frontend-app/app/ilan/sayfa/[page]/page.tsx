@@ -10,7 +10,9 @@ export default function page({params,searchParams}:any) {
       <div>
        <SearchAd></SearchAd>
       </div>
+      <Suspense fallback={<p className='w-full text-center'>Loading...</p>}>
         <Ad page={params.page} searchParams={searchParams}></Ad>
+      </Suspense>
     </div>
   )
 }

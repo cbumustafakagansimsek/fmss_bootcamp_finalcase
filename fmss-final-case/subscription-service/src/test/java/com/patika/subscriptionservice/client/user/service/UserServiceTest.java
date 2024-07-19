@@ -1,6 +1,5 @@
 package com.patika.subscriptionservice.client.user.service;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 
 import com.patika.subscriptionservice.client.user.UserClient;
 import com.patika.subscriptionservice.client.user.response.UserResponse;
@@ -13,6 +12,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 import feign.FeignException;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
@@ -24,7 +25,7 @@ class UserServiceTest {
 
 
     @Test
-    void testUpdateRoleAsSubscribed_Success() {
+    void testUpdateRoleAsSubscribed_succesfully() {
         Long userId = 1L;
 
         UserResponse userResponse = new UserResponse();
@@ -40,7 +41,7 @@ class UserServiceTest {
     }
 
     @Test
-    void testUpdateRoleAsSubscribed_Failure() {
+    void testUpdateRoleAsSubscribed_failure() {
         Long userId = 1L;
 
         FeignException feignException = mock(FeignException.class);

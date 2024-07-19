@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AdRepository extends JpaRepository<Ad, Long>, JpaSpecificationExecutor<Ad> {
@@ -15,5 +16,7 @@ public interface AdRepository extends JpaRepository<Ad, Long>, JpaSpecificationE
 
     List<Ad> findAllByUserId(Long userId);
     List<Ad> findAllByUserIdAndStatus(Long userId, AdStatus status);
+
+    Optional<Ad> findByIdAndUserId(Long id,Long userId);
 
 }

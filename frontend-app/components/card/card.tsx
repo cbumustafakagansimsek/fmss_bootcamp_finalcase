@@ -18,8 +18,8 @@ export default function Card({ad}:any) {
         />
         <div className='p-3 flex flex-col'>
             <div className=' border-b'>
-                <h2 className='text-xl font-semibold text-slate-600'>{ad.title}</h2>
-                <span className='text-slate-400'>{ad.province},{ad.district}</span>
+                <h2 className='text-xl font-semibold text-slate-600 capitalize'>{ad.title}</h2>
+                <span className='text-slate-400 capitalize'>{ad.province},{ad.district}</span>
             </div>
             <div className='flex gap-2'>
                 <span className='flex items-center'><IoBedOutline/>{ad.numberOfRooms}</span>

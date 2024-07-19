@@ -1,5 +1,7 @@
 package com.patika.subscriptionservice.service;
 
+import com.patika.subscriptionservice.client.ad.service.AdService;
+import com.patika.subscriptionservice.client.ad.service.AdStatus;
 import com.patika.subscriptionservice.client.user.response.UserResponse;
 import com.patika.subscriptionservice.client.user.service.UserService;
 import com.patika.subscriptionservice.converter.SubscriptionConverter;
@@ -28,6 +30,8 @@ public class SubscriptionService {
 
     private final SubscriptionConverter subscriptionConverter;
     private final UserService userService;
+
+    private final AdService adService;
 
     public void save(Long id){
         log.info("Request to save subscription by id:{}",id);
@@ -81,6 +85,7 @@ public class SubscriptionService {
         for (Subscription subscription : subscriptions) {
             if (subscription.getEndDate().isBefore(LocalDate.now())) {
                 log.info("Cancellation subscriotion for id:{}",subscription.getUserId());
+                adService.updateAllStatusById(AdStatus.PASSIVE, subscription.getUserId());
                 userService.updateRoleAsInitial(subscription.getUserId());
             }
         }

@@ -2,6 +2,8 @@
 import React, { FormEvent, useState } from 'react'
 import { useCookies } from 'next-client-cookies';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import { ImCross } from 'react-icons/im';
 
 
 export default function page({params}:any) {
@@ -46,8 +48,9 @@ export default function page({params}:any) {
         
     }
   return (
-    <div className='container mx-auto py-32 flex justify-center'>
+    <div className='py-32 flex justify-center absolute top-0 bg-black bg-opacity-30 w-full'>
         <form onSubmit={createAd} className='flex flex-col gap-5 bg-white rounded-lg p-5 shadow-lg'>
+            <Link href={`/user/${params.id}/ilan`} className='flex justify-end'><ImCross className='text-red-600' /></Link>
             <h1 className='text-lg font-semibold text-black'>Apartman Kaydet</h1>
 
             <div className='flex flex-col'>
