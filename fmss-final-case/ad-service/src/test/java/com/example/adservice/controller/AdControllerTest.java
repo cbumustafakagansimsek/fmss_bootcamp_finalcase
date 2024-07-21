@@ -145,6 +145,16 @@ public class AdControllerTest {
     }
 
     @Test
+    void findByIdForSubscripted_successfully() throws Exception{
+
+        mockMvc.perform(get("/api/v1/ads/secure/{id}",1L))
+                .andExpect(status().isOk());
+
+        verify(adService,times(1)).findById(anyLong());
+
+    }
+
+    @Test
     void findAllByUserId_successfully() throws Exception{
 
         mockMvc.perform(get("/api/v1/ads/user/{userId}",1L)
@@ -164,6 +174,17 @@ public class AdControllerTest {
                 .andExpect(status().isOk());
 
         verify(adService,times(1)).updateAllStatusByUser(any(AdStatus.class),anyLong());
+
+    }
+
+    @Test
+    void delete_successfully() throws Exception{
+        doNothing().when(adService).delete(1L);
+
+        mockMvc.perform(delete("/api/v1/ads/secure/delete/{id}",1L))
+                .andExpect(status().isOk());
+
+        verify(adService,times(1)).delete(anyLong());
 
     }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 const getAd=async (id:string) => {
     try{
-        const response = await fetch("http://localhost:8080/api/v1/ads/"+id,{cache:"default"});
+        const response = await fetch("http://localhost:8080/api/v1/ads/"+id,{cache:"force-cache"});
         if(!response.ok){
             throw new Error("Not Found");
         }

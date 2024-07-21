@@ -13,7 +13,6 @@ const getAdForUser =async (id:string,status:string) => {
       method:'GET',
     }
     );
-    console.log("ad req");
     
    return await response.json();
 }
@@ -25,6 +24,7 @@ export default async function Listing({params,searchParams}
 
     const data = await getAdForUser(params.id,searchParams.status);
     console.log(data);
+    
 
   return (
     <div className='flex justify-center flex-wrap gap-8'>{data.map((card:any,index:number)=><Card data={card} key={index}></Card>)}</div>

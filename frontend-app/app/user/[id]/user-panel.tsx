@@ -8,17 +8,15 @@ import { headers } from "next/headers";
 const getUser =async (id:string) => {
     const response = await fetch(`http://localhost:8080/api/v1/user//${id}` 
     ,{
-      cache:'no-store',
+      cache:'force-cache',
       method:'GET',
     }
     );
-    console.log("girdi");
     
    return await response.json();
 }
 export default async function UserPanel({id}:any) {
     const data = await getUser(id);
-    console.log(data);
     
   return (
     <div className='container mx-auto px-4'>
@@ -28,7 +26,7 @@ export default async function UserPanel({id}:any) {
             <span className='text-xl font-semibold'>İsim: <span className='font-normal'>{data.name}</span></span>
             <span className='text-xl font-semibold'>Soyisim: <span className='font-normal'>{data.surname}</span></span>
             <span className='text-xl font-semibold'>email: <span className='font-normal'>{data.mail}</span></span>
-            <span className='text-xl font-semibold flex'>Abonelik: <span className='px-2'>{data.role=="SUBSCRIPTED"?<FaCheck className='text-green-600' />:<ImCross className='text-red-600' />}</span></span>
+            <Link className='bg-white p-3 w-48 font-semibold text-black rounded-lg flex justify-center items-center flex-col border-2 border-black hover:bg-slate-200' href={`/user/${id}/abone-bilgileri`}>Abonelik Paketlerim</Link>
         </div>
     </div>
     <div className='flex flex-wrap gap-5 justify-center bg-white rounded-lg p-5 shadow-lg'>

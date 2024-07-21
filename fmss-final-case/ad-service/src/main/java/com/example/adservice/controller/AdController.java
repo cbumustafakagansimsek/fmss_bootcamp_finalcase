@@ -80,6 +80,13 @@ public class AdController {
         return new ResponseEntity<>(adService.findById(id),HttpStatus.OK);
     }
 
+    @GetMapping("/secure/{id}")
+    public ResponseEntity<AdResponse> findByIdForSubscripted(@PathVariable Long id){
+        log.info("REST Request to find by id {}",id);
+
+        return new ResponseEntity<>(adService.findById(id),HttpStatus.OK);
+    }
+
     @GetMapping("user/{userId}")
     public ResponseEntity<List<AdResponse>> findAllByUserId(@PathVariable Long userId,
                                                             @RequestParam(value = "status",required = false) Optional<AdStatus> status){
@@ -96,5 +103,14 @@ public class AdController {
         adService.updateAllStatusByUser(status,id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @DeleteMapping("secure/delete/{id}")
+    public ResponseEntity<Void> updateAllStatusByUser(@PathVariable Long id){
+        log.info("REST Request to delete by id: {}",id);
+
+        adService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 
 }

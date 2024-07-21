@@ -98,8 +98,8 @@ class AdServiceTest {
             adService.save(flatRequest, USER_ID);
         });
 
-        verify(adRepository, never()).save(any(Ad.class));
-        verify(adActivationProducer, never()).sendAdActivation(any(AdActivationDto.class));
+        verify(adRepository, times(0)).save(any(Ad.class));
+        verify(adActivationProducer, times(0)).sendAdActivation(any(AdActivationDto.class));
     }
 
     @Test
@@ -196,5 +196,27 @@ class AdServiceTest {
 
         verify(adRepository, times(1)).saveAll(ads);
         ads.forEach(ad -> assertEquals(AdStatus.PASSIVE, ad.getStatus()));
+    }
+
+    @Test
+    void testDeleteAdSuccess_shouldReturnSuccess() {
+        Ad ad= Ad.builder().id(USER_ID).build();
+        when(adRepository.findById(1L)).thenReturn(Optional.of(ad));
+
+        adService.delete(USER_ID);
+
+        verify(adRepository, times(1)).deleteById(USER_ID);
+        verify(logProducer, times(1)).sendLog(any(LogRequest.class));
+    }
+
+    @Test
+    void testDeleteAdNotFound_shouldThrowAdNotFoundException() {
+
+        when(adRepository.findById(USER_ID)).thenReturn(Optional.empty());
+
+        assertThrows(AdNotFoundException.class, () -> adService.delete(USER_ID));
+
+        verify(adRepository, times(0)).deleteById(USER_ID);
+        verify(logProducer, times(1)).sendLog(any(LogRequest.class));
     }
 }

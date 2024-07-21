@@ -24,7 +24,8 @@ const getAd =async (page:number,searchParams:any) => {
 export default async function Ad({page,searchParams}:any) {
   
   const data = await getAd(page,searchParams);
-  const ads:any[] = data.response;
+  
+  const ads:any[] = data.response||[];
   
 
   

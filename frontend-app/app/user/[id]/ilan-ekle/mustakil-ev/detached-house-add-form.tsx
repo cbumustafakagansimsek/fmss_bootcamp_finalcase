@@ -40,6 +40,7 @@ export default function DetachedHouseAddForm({id}:{id:string}) {
         
         if(response.status==200){
             router.push(`/user/${id}/ilan`);
+            router.refresh();
         }else{
             const data = await response.json();
             setError(data.message)
@@ -48,7 +49,6 @@ export default function DetachedHouseAddForm({id}:{id:string}) {
         
     }
   return (
-        <div className='py-32 flex justify-center absolute top-0 bg-black bg-opacity-30 w-full'>
             <form onSubmit={createAd} className='flex flex-col gap-5 bg-white rounded-lg p-5 shadow-lg'>
             <Link href={`/user/${id}/ilan`} className='flex justify-end'><ImCross className='text-red-600' /></Link>
             <h1 className='text-lg font-semibold text-black'>Müstakil Ev Kaydet</h1>
@@ -96,6 +96,5 @@ export default function DetachedHouseAddForm({id}:{id:string}) {
             <button type='submit' className='flex justify-center items-center bg-black text-white text-xl rounded-lg border-2 border-black hover:bg-white hover:text-black font-semibold p-4'>Kaydet</button>
             <span className='text-red-600 uppercase'>{error}</span>
         </form>
-    </div>
   )
 }

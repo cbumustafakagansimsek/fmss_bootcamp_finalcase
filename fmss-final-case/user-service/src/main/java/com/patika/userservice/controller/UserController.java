@@ -28,6 +28,7 @@ public class UserController {
         return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
+
     @PutMapping("role/subscribed/{id}")
     public ResponseEntity<UserResponse> updateRoleAsSubscribed(@PathVariable Long id){
         log.info("Rest request to change user role as Subscribed by Id: {}",id);

@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation';
 import React from 'react'
 const getUser=async (id:string) => {
     try{
-    const response = await fetch("http://localhost:8080/api/v1/user/"+id,{cache:"default"});
+    const response = await fetch("http://localhost:8080/api/v1/user/"+id,{cache:"force-cache"});
     if(!response.ok){
         throw new Error("Not Found");
     }

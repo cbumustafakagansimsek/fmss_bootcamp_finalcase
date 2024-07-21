@@ -61,7 +61,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
         } else if (exchange.getRequest().getPath().toString().contains("/api/v1/ads/secure")) {
 
             if (!AuthRole.SUBSCRIPTED.equals(role)) {
-                throw  new AuthException("2Unauthorized role:"+role);
+                throw  new AuthException("Unauthorized role:" + role);
             }
         }
 

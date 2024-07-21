@@ -4,14 +4,13 @@ import StatusFilter from './status-ad';
 import Listing from './listing';
 
 
-
-export default  function page({params,searchParams}
+export default async function page({params,searchParams}
     :{
         params:{id:string},
         searchParams:{status:string}
     }) {
-    
-    
+
+
         
     return (
         <div className='container mx-auto px-4'>

@@ -38,6 +38,8 @@ spring:
           uri: lb://SUBSCRIPTION-SERVICE
           predicates:
             - Path=/api/v1/subscriptions/**
+          filters:
+            - AuthFilter
 server:
   port: 8080
 

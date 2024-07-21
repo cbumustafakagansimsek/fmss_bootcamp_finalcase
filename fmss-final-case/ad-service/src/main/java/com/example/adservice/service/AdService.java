@@ -162,5 +162,17 @@ public class AdService {
 
     }
 
+    public void delete(Long id){
+        log.info("Request to delete ad: {}",id);
+        logProducer.sendLog(new LogRequest("[ad-service]",
+                Level.INFO,
+                "adservice",
+                "Request to delete ad: "+id,
+                new Date()));
+        Ad ad = adRepository.findById(id).orElseThrow(()-> new AdNotFoundException("Real estate ad not found by id:"+id));
+        adRepository.deleteById(ad.getId());
+
+    }
+
     
 }
