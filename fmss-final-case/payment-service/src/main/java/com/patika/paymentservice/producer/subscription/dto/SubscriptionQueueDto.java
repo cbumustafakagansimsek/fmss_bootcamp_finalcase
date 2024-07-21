@@ -1,4 +1,4 @@
-package com.patika.paymentservice.producer.dto;
+package com.patika.paymentservice.producer.subscription.dto;
 
 import lombok.*;
 

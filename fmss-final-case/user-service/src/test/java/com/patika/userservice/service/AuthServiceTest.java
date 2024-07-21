@@ -10,6 +10,8 @@ import com.patika.userservice.dto.request.UserRequest;
 import com.patika.userservice.dto.response.UserResponse;
 import com.patika.userservice.exception.TokenIsNotValidException;
 import com.patika.userservice.model.Role;
+import com.patika.userservice.producer.log.LogProducer;
+import com.patika.userservice.producer.log.LogRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,6 +32,9 @@ class AuthServiceTest {
 
     @Mock
     private AuthenticationManager authenticationManager;
+
+    @Mock
+    private LogProducer logProducer;
 
     @Mock
     private JwtProvider jwtTokenProvider;
@@ -60,21 +65,26 @@ class AuthServiceTest {
     void testLogin_returnUserSecurityInfo() {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(auth);
         when(jwtTokenProvider.generateJwtToken(auth)).thenReturn(jwtToken);
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         UserSecurityInfo securityInfo = authService.login(loginRequest);
 
         assertEquals(jwtToken, securityInfo.getToken());
 
+        verify(logProducer).sendLog(any(LogRequest.class));
         verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
         verify(jwtTokenProvider).generateJwtToken(auth);
     }
 
     @Test
     void testRegister_succesfully() {
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
+
         boolean result = authService.register(userRequest);
 
         assertTrue(result);
 
+        verify(logProducer).sendLog(any(LogRequest.class));
         verify(userService).save(userRequest);
     }
 

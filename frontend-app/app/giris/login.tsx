@@ -1,11 +1,12 @@
 "use client"
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useState } from 'react'
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCookies } from 'next-client-cookies';
 import { jwtDecode } from "jwt-decode";
 
 
 export default function Login() {
+  const [failure,setFailure] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const cookies = useCookies();
@@ -29,13 +30,13 @@ export default function Login() {
     });
     const resData  = await response.json();
     
-    if (resData) {
+    if (response.ok) {
       cookies.set("token",resData.token);
       const nextUrl = searchParams.get("next");
       router.push(nextUrl ?? "/");
       router.refresh();
     } else {
-      alert("Login failed");
+      setFailure(true);
     }
   };
 
@@ -50,6 +51,7 @@ export default function Login() {
                 <input className='border border-slate-600 rounded-lg p-2' type="password" id='password' name='password'/>
                 <button type='submit' className=' bg-blue-700 text-white rounded-lg p-3'>Giriş</button>
             </form>
+            {failure?<span className='text-red-600'>Email veya şifre hatalı</span>:""}
         </div>
   )
 }

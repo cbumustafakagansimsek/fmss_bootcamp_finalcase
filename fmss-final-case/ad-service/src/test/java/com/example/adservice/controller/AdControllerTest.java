@@ -5,6 +5,7 @@ import com.example.adservice.dto.request.DetachedHouseRequest;
 import com.example.adservice.dto.request.FlatRequest;
 import com.example.adservice.dto.request.VillaRequest;
 import com.example.adservice.model.AdStatus;
+import com.example.adservice.producer.log.LogProducer;
 import com.example.adservice.service.AdService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -27,6 +28,8 @@ public class AdControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @MockBean
+    private LogProducer logProducer;
     @MockBean
     private AdService adService;
     @Test
@@ -148,7 +151,7 @@ public class AdControllerTest {
                         .param("status","ACTIVE"))
                 .andExpect(status().isOk());
 
-        verify(adService,times(1)).findAllByUserId(1L, Optional.of(AdStatus.ACTIVE));
+        verify(adService,times(1)).findAllByUserIdByStatus(1L, Optional.of(AdStatus.ACTIVE));
 
     }
 

@@ -25,7 +25,6 @@ export default function Register() {
       },
       body: JSON.stringify(request),
     });
-    console.log(response.status);
     
     if (response.status==201) {
       router.push("/giris");

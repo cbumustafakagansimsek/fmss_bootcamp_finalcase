@@ -1,7 +1,9 @@
 package com.patika.paymentservice.service;
 
-import com.patika.paymentservice.producer.SubscriptionProducer;
-import com.patika.paymentservice.producer.dto.SubscriptionQueueDto;
+import com.patika.paymentservice.producer.log.LogProducer;
+import com.patika.paymentservice.producer.log.LogRequest;
+import com.patika.paymentservice.producer.subscription.SubscriptionProducer;
+import com.patika.paymentservice.producer.subscription.dto.SubscriptionQueueDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,13 +23,17 @@ public class PaymentServiceTest {
     @Mock
     private SubscriptionProducer subscriptionProducer;
 
+    @Mock
+    private LogProducer logProducer;
     @Test
     void paymentValidation_shouldAlwaysReturnTrue(){
-
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
         Boolean result = paymentService.paymentValidation(1L,10);
 
         assertEquals(true,result);
         verify(subscriptionProducer,times(1)).sendSubscription(Mockito.any(SubscriptionQueueDto.class));
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
 
     }
 }

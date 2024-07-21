@@ -34,6 +34,7 @@ public class AdController {
         log.info("REST Request to save real estate ad as flat: {}", request);
         adService.save(request,userId);
         return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
     @PostMapping("/secure/villa")
@@ -84,7 +85,7 @@ public class AdController {
                                                             @RequestParam(value = "status",required = false) Optional<AdStatus> status){
         log.info("REST Request to find by id {}",userId);
 
-        return new ResponseEntity<>(adService.findAllByUserId(userId,status),HttpStatus.OK);
+        return new ResponseEntity<>(adService.findAllByUserIdByStatus(userId,status),HttpStatus.OK);
     }
 
     @PutMapping("secure/status/user")

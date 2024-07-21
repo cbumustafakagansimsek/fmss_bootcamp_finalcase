@@ -17,18 +17,22 @@ import com.example.adservice.factory.impl.FlatFactory;
 import com.example.adservice.factory.impl.VillaFactory;
 import com.example.adservice.model.Ad;
 import com.example.adservice.model.AdStatus;
-import com.example.adservice.producer.AdActivationDto;
-import com.example.adservice.producer.AdActivationProducer;
+import com.example.adservice.producer.ad.AdActivationDto;
+import com.example.adservice.producer.ad.AdActivationProducer;
+import com.example.adservice.producer.log.LogProducer;
+import com.example.adservice.producer.log.LogRequest;
 import com.example.adservice.repository.AdRepository;
 import com.example.adservice.repository.spesification.AdSpesification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.Level;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,6 +42,7 @@ import java.util.Optional;
 public class AdService {
     private final AdRepository adRepository;
 
+    private final LogProducer logProducer;
     private final AdConverter adConverter;
 
     private final AdActivationProducer adActivationProducer;
@@ -45,6 +50,11 @@ public class AdService {
 
     public <T> void save(T c ,Long userId){
         log.info("Request to save real estate ad");
+        logProducer.sendLog(new LogRequest("[ad-service]",
+                Level.INFO,
+                "adservice",
+                "Request to save real estate ad: "+userId,
+                new Date()));
         Ad ad;
         if (c.getClass() == FlatRequest.class ){
             ad = new FlatFactory().createAd((FlatRequest) c,userId);
@@ -71,6 +81,11 @@ public class AdService {
     public SearchResponse searchActive(AdSearchRequest request){
 
         log.info("Request to search active real estate ad by:{}",request);
+        logProducer.sendLog(new LogRequest("[ad-service]",
+                Level.INFO,
+                "adservice",
+                "Request to search active real estate ad by:{}"+request,
+                new Date()));
 
         Specification<Ad> adSpecification = AdSpesification.initRealEstateAdSpecification(request);
 
@@ -87,6 +102,11 @@ public class AdService {
 
     public void updateStatus(AdStatus status, Long id,Long userId){
         log.info("Request to update status as {} by id:{}",status,id);
+        logProducer.sendLog(new LogRequest("[ad-service]",
+                Level.INFO,
+                "adservice",
+                "Request to update status as "+status+" by id:"+id,
+                new Date()));
 
         Ad ad = adRepository.findByIdAndUserId(id,userId)
                 .orElseThrow(()->new AdNotFoundException("Real estate ad not found by id:"+id));
@@ -98,12 +118,23 @@ public class AdService {
 
     public AdResponse findById(Long id){
         log.info("Request to find by id {}",id);
+        logProducer.sendLog(new LogRequest("[ad-service]",
+                Level.INFO,
+                "adservice",
+                "Request to find by id {}"+id,
+                new Date()));
         Ad ad = adRepository.findById(id).orElseThrow(()->new AdNotFoundException("Real estate ad not found by id:"+id));
         return adConverter.toResponse(ad) ;
     }
 
-    public List<AdResponse> findAllByUserId(Long userId, Optional<AdStatus> status){
+    public List<AdResponse> findAllByUserIdByStatus(Long userId, Optional<AdStatus> status){
         log.info("Request to find all by id {} with status: {}",userId,status);
+        logProducer.sendLog(new LogRequest("[ad-service]",
+                Level.INFO,
+                "adservice",
+                "Request to find all by id "+userId+" with status::"+status,
+                new Date()));
+
         if (status.isPresent()){
             return adConverter.toResponse(adRepository.findAllByUserIdAndStatus(userId,status.get())) ;
         }
@@ -113,7 +144,13 @@ public class AdService {
 
 
     public void updateAllStatusByUser(AdStatus status, Long id){
-        log.info("Request to update status as {} by id:{}",status,id);
+        log.info("Request to all update status as {} by id:{}",status,id);
+        logProducer.sendLog(new LogRequest("[ad-service]",
+                Level.INFO,
+                "adservice",
+                "Request to all update status as "+status+" by id:"+id,
+                new Date()));
+
         List<Ad> ads = adRepository.findAllByUserId(id);
 
         ads = ads.stream()

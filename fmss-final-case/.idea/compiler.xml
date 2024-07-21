@@ -10,6 +10,7 @@
         <module name="registry" />
         <module name="payment-service" />
         <module name="subscription-service" />
+        <module name="log-service" />
         <module name="product-service" />
         <module name="user-service" />
         <module name="ad-activation-service" />
@@ -22,6 +23,7 @@
       <module name="ad-service" target="19" />
       <module name="gateway" target="19" />
       <module name="listing-service" target="19" />
+      <module name="log-service" target="19" />
       <module name="payment-service" target="19" />
       <module name="product-service" target="19" />
       <module name="real-estate-listing-activate-service" target="19" />
@@ -40,6 +42,7 @@
       <module name="ad-service" options="-parameters" />
       <module name="gateway" options="-parameters" />
       <module name="listing-service" options="-parameters" />
+      <module name="log-service" options="-parameters" />
       <module name="payment-service" options="-parameters" />
       <module name="product-service" options="-parameters" />
       <module name="real-estate-listing-activate-service" options="-parameters" />

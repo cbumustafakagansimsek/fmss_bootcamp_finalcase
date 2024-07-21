@@ -1,6 +1,8 @@
 package com.example.adservice.producer;
 
 import com.example.adservice.config.RabbitProducerConfig;
+import com.example.adservice.producer.ad.AdActivationDto;
+import com.example.adservice.producer.ad.AdActivationProducer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

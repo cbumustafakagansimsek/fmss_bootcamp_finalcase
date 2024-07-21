@@ -39,7 +39,7 @@ export default function DetachedHouseAddForm({id}:{id:string}) {
         })
         
         if(response.status==200){
-            router.push(`/user/${id}`);
+            router.push(`/user/${id}/ilan`);
         }else{
             const data = await response.json();
             setError(data.message)

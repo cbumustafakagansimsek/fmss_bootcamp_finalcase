@@ -3,6 +3,7 @@ package com.patika.userservice.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.patika.userservice.dto.request.LoginRequest;
 import com.patika.userservice.dto.request.UserRequest;
+import com.patika.userservice.producer.log.LogProducer;
 import com.patika.userservice.service.AuthService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class AuthControllerTest {
 
     @MockBean
     private AuthService authService;
+
+    @MockBean
+    private LogProducer logProducer;
 
     @Test
     @WithMockUser(username = "test@mail.com", roles = "INITIAL")

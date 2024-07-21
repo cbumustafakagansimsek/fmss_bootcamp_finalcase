@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation';
 
 const getAd=async (id:string) => {
     try{
-        const response = await fetch("http://localhost:8080/api/v1/ads/"+id,{cache:"default"});
+        const response = await fetch("http://localhost:8080/api/v1/ads/"+id,{cache:"no-store"});
         if(!response.ok){
             throw new Error("Not Found");
         }

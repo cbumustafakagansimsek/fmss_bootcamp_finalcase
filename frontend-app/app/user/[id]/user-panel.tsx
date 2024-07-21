@@ -12,11 +12,14 @@ const getUser =async (id:string) => {
       method:'GET',
     }
     );
+    console.log("girdi");
+    
    return await response.json();
 }
 export default async function UserPanel({id}:any) {
     const data = await getUser(id);
-
+    console.log(data);
+    
   return (
     <div className='container mx-auto px-4'>
     <div className='bg-white p-5 my-5 rounded-lg shadow-lg'>

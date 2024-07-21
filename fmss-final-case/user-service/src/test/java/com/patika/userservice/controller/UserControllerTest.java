@@ -1,6 +1,7 @@
 package com.patika.userservice.controller;
 
 
+import com.patika.userservice.producer.log.LogProducer;
 import com.patika.userservice.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,8 @@ public class UserControllerTest {
     @MockBean
     private UserService userService;
 
+    @MockBean
+    private LogProducer logProducer;
     private static final Long USER_ID = 1L;
 
 

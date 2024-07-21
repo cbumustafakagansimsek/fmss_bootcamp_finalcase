@@ -7,6 +7,8 @@ import com.patika.subscriptionservice.converter.SubscriptionConverter;
 import com.patika.subscriptionservice.dto.response.SubscriptionResponse;
 import com.patika.subscriptionservice.exception.SubscriptionNotFoundException;
 import com.patika.subscriptionservice.model.Subscription;
+import com.patika.subscriptionservice.producer.log.LogProducer;
+import com.patika.subscriptionservice.producer.log.LogRequest;
 import com.patika.subscriptionservice.repository.SubscriptionRepository;
 import org.instancio.Instancio;
 import org.junit.jupiter.api.Test;
@@ -34,6 +36,9 @@ class SubscriptionServiceTest {
     private SubscriptionRepository subscriptionRepository;
 
     @Mock
+    private LogProducer logProducer;
+
+    @Mock
     private SubscriptionConverter subscriptionConverter;
 
     @Mock
@@ -57,10 +62,13 @@ class SubscriptionServiceTest {
 
         when(subscriptionRepository.findTopByUserIdOrderByEndDateDesc(USER_ID))
                 .thenReturn(Optional.of(existingSubscription));
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         subscriptionService.save(USER_ID);
 
         verify(subscriptionRepository, times(1)).save(any(Subscription.class));
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
     }
 
     @Test
@@ -69,11 +77,14 @@ class SubscriptionServiceTest {
 
         when(subscriptionRepository.findTopByUserIdOrderByEndDateDesc(userId))
                 .thenReturn(Optional.empty());
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         subscriptionService.save(userId);
 
         verify(subscriptionRepository, times(1)).save(any(Subscription.class));
         verify(userService, times(1)).updateRoleAsSubscribed(userId);
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
     }
 
     @Test
@@ -96,11 +107,15 @@ class SubscriptionServiceTest {
                 .thenReturn(subscriptions);
         when(subscriptionConverter.toResponse(firstSubscription))
                 .thenReturn(subscriptionResponse);
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         SubscriptionResponse result = subscriptionService.findCurrentSubscription(USER_ID);
 
-        verify(subscriptionConverter,times(1)).toResponse(firstSubscription);
         assertEquals(subscriptionResponse, result);
+
+        verify(subscriptionConverter,times(1)).toResponse(firstSubscription);
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
     }
 
     @Test
@@ -110,11 +125,13 @@ class SubscriptionServiceTest {
 
         when(subscriptionRepository.findAllByUserId(USER_ID))
                 .thenReturn(subscriptions);
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         SubscriptionNotFoundException subscriptionNotFoundException = assertThrows(SubscriptionNotFoundException.class,()-> subscriptionService.findCurrentSubscription(USER_ID));
         assertThat(subscriptionNotFoundException.getMessage()).isEqualTo("Subcription not found by userId:1");
 
         verifyNoInteractions(subscriptionConverter);
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
 
     }
 
@@ -129,6 +146,7 @@ class SubscriptionServiceTest {
 
         when(subscriptionRepository.findAll())
                 .thenReturn(Arrays.asList(expiredSubscription, activeSubscription));
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         subscriptionService.cancelExpiredSubscription();
 
@@ -136,5 +154,40 @@ class SubscriptionServiceTest {
         verify(adService, times(0)).updateAllStatusById(AdStatus.PASSIVE,userId_2);
         verify(userService, times(1)).updateRoleAsInitial(userId_1);
         verify(userService, times(0)).updateRoleAsInitial(userId_2);
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
+    }
+
+    @Test
+    void testFindAllByUser_shouldReturnSubscriptionResponseList(){
+
+        Subscription subscription1 = Instancio.of(Subscription.class)
+                .set(field("userId"),USER_ID)
+                .create();
+        Subscription subscription2 = Instancio.of(Subscription.class)
+                .set(field("userId"),USER_ID)
+                .create();
+
+        List<Subscription> subscriptionList = List.of(subscription1,subscription2);
+
+        SubscriptionResponse subscriptionResponse1 = Instancio.of(SubscriptionResponse.class)
+                .set(field("userId"),USER_ID)
+                .create();
+        SubscriptionResponse subscriptionResponse2 = Instancio.of(SubscriptionResponse.class)
+                .set(field("userId"),USER_ID)
+                .create();
+
+        List<SubscriptionResponse> subscriptionResponseList = List.of(subscriptionResponse1,subscriptionResponse2);
+
+        when(subscriptionRepository.findAllByUserId(USER_ID)).thenReturn(subscriptionList);
+        when(subscriptionConverter.toResponse(subscriptionList)).thenReturn(subscriptionResponseList);
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
+
+        List<SubscriptionResponse> result = subscriptionService.findAllByUser(USER_ID);
+
+        assertEquals(subscriptionResponseList.size(),result.size());
+
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
     }
 }

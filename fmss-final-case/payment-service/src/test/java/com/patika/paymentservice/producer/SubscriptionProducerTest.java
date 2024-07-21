@@ -1,7 +1,8 @@
 package com.patika.paymentservice.producer;
 
 import com.patika.paymentservice.config.RabbitProducerConfig;
-import com.patika.paymentservice.producer.dto.SubscriptionQueueDto;
+import com.patika.paymentservice.producer.subscription.SubscriptionProducer;
+import com.patika.paymentservice.producer.subscription.dto.SubscriptionQueueDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

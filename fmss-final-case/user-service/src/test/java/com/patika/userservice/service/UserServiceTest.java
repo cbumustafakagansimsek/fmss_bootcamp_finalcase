@@ -10,6 +10,8 @@ import com.patika.userservice.exception.ExistUserException;
 import com.patika.userservice.exception.UserNotFoundException;
 import com.patika.userservice.model.Role;
 import com.patika.userservice.model.User;
+import com.patika.userservice.producer.log.LogProducer;
+import com.patika.userservice.producer.log.LogRequest;
 import com.patika.userservice.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,6 +35,8 @@ class UserServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private LogProducer logProducer;
     @Mock
     private UserConverter converter;
 
@@ -82,15 +86,18 @@ class UserServiceTest {
     void testSaveUser_successfully() {
         when(userRepository.existsUserByMail(userRequest.getMail())).thenReturn(false);
         when(passwordEncoder.encode(userRequest.getPassword())).thenReturn("encodedPassword");
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         userService.save(userRequest);
 
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
         verify(userRepository, times(1)).save(any(User.class));
     }
 
     @Test
     void testSaveUser_withExistUser() {
         when(userRepository.existsUserByMail(userRequest.getMail())).thenReturn(true);
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         ExistUserException thrown = assertThrows(ExistUserException.class, () -> {
             userService.save(userRequest);
@@ -98,27 +105,35 @@ class UserServiceTest {
 
         assertEquals("User is exist test@mail.com", thrown.getMessage());
         verify(userRepository, times(0)).save(any(User.class));
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
     }
 
     @Test
     void testFindById_shouldReturnUserResponse() {
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
         when(converter.toResponse(user)).thenReturn(new UserResponse());
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         UserResponse result = userService.findById(USER_ID);
 
         assertNotNull(result);
         verify(userRepository, times(1)).findById(USER_ID);
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
     }
 
     @Test
     void testFindById_shouldThrowUserNotFoundException() {
         when(userRepository.findById(USER_ID)).thenReturn(Optional.empty());
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
+
         UserNotFoundException userNotFoundException = Assertions.assertThrows(UserNotFoundException.class, () -> userService.findById(USER_ID));
 
         assertThat(userNotFoundException.getMessage()).isEqualTo("User not found by id:1");
 
         verify(userRepository, times(1)).findById(USER_ID);
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
         verifyNoInteractions(converter);
     }
 
@@ -128,6 +143,7 @@ class UserServiceTest {
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
         when(converter.toResponse(any(User.class))).thenReturn(userResponse);
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         UserResponse result = userService.updateRoleAsSubscribed(USER_ID);
 
@@ -137,6 +153,8 @@ class UserServiceTest {
         verify(userRepository, times(1)).findById(USER_ID);
         verify(userRepository, times(1)).save(user);
         verify(converter, times(1)).toResponse(user);
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
     }
 
     @Test
@@ -147,6 +165,7 @@ class UserServiceTest {
         when(userRepository.findById(USER_ID)).thenReturn(Optional.of(user));
         when(userRepository.save(any(User.class))).thenReturn(user);
         when(converter.toResponse(any(User.class))).thenReturn(userResponse);
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         UserResponse response = userService.updateRoleAsInitial(USER_ID);
 
@@ -156,11 +175,14 @@ class UserServiceTest {
         verify(userRepository, times(1)).findById(USER_ID);
         verify(userRepository, times(1)).save(user);
         verify(converter, times(1)).toResponse(user);
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
+
     }
 
     @Test
     void testUpdateRoleAsSubscribed_shouldReturnUserNotFound() {
         when(userRepository.findById(USER_ID)).thenReturn(Optional.empty());
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
             userService.updateRoleAsSubscribed(USER_ID);
@@ -170,12 +192,14 @@ class UserServiceTest {
 
         verify(userRepository, times(1)).findById(USER_ID);
         verify(userRepository, times(0)).save(any(User.class));
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
         verifyNoInteractions(converter);
     }
 
     @Test
     void testUpdateRoleAsInitial_shouldReturnUserNotFound() {
         when(userRepository.findById(USER_ID)).thenReturn(Optional.empty());
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () -> {
             userService.updateRoleAsInitial(USER_ID);
@@ -185,6 +209,7 @@ class UserServiceTest {
 
         verify(userRepository, times(1)).findById(USER_ID);
         verify(userRepository, times(0)).save(any(User.class));
+        verify(logProducer,times(1)).sendLog(any(LogRequest.class));
         verifyNoInteractions(converter);
     }
 }

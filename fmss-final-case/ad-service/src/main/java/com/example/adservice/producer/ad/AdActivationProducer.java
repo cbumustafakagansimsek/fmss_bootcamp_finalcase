@@ -1,7 +1,6 @@
-package com.patika.paymentservice.producer;
+package com.example.adservice.producer.ad;
 
-import com.patika.paymentservice.config.RabbitProducerConfig;
-import com.patika.paymentservice.producer.dto.SubscriptionQueueDto;
+import com.example.adservice.config.RabbitProducerConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -10,14 +9,14 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @RequiredArgsConstructor
 @Component
-public class SubscriptionProducer {
+public class AdActivationProducer {
 
     private final AmqpTemplate rabbitTemplate;
     private final RabbitProducerConfig rabbitProducerConfig;
 
-    public void sendSubscription(SubscriptionQueueDto dto) {
+    public void sendAdActivation(AdActivationDto dto) {
         rabbitTemplate.convertAndSend(rabbitProducerConfig.getExchange(), rabbitProducerConfig.getRoutingKey(), dto);
-        log.info("Subscription sent. exchange:{}", rabbitProducerConfig.getExchange());
+        log.info("ad activation sent exchange:{}", rabbitProducerConfig.getExchange());
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.adservice.producer;
+package com.example.adservice.producer.ad;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

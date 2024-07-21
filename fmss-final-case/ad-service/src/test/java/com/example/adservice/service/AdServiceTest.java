@@ -13,8 +13,10 @@ import com.example.adservice.exception.ExhaustedAdLimitException;
 import com.example.adservice.factory.impl.FlatFactory;
 import com.example.adservice.model.Ad;
 import com.example.adservice.model.AdStatus;
-import com.example.adservice.producer.AdActivationDto;
-import com.example.adservice.producer.AdActivationProducer;
+import com.example.adservice.producer.ad.AdActivationDto;
+import com.example.adservice.producer.ad.AdActivationProducer;
+import com.example.adservice.producer.log.LogProducer;
+import com.example.adservice.producer.log.LogRequest;
 import com.example.adservice.repository.AdRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -45,6 +47,9 @@ class AdServiceTest {
     private AdConverter adConverter;
 
     @Mock
+    private LogProducer logProducer;
+
+    @Mock
     private AdActivationProducer adActivationProducer;
 
     @Mock
@@ -68,6 +73,7 @@ class AdServiceTest {
         when(adRepository.countByUserId(USER_ID)).thenReturn(5);
         when(subscriptionService.findCurrentSubscription(USER_ID)).thenReturn(subscriptionResponse);
         when(adRepository.save(any(Ad.class))).thenReturn(ad);
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         adService.save(flatRequest, USER_ID);
 
@@ -86,6 +92,7 @@ class AdServiceTest {
         flatRequest.setProvince("Test");
         when(adRepository.countByUserId(USER_ID)).thenReturn(11);
         when(subscriptionService.findCurrentSubscription(USER_ID)).thenReturn(subscriptionResponse); // Example
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         assertThrows(ExhaustedAdLimitException.class, () -> {
             adService.save(flatRequest, USER_ID);
@@ -105,6 +112,7 @@ class AdServiceTest {
         Page<Ad> ads = new PageImpl<>(List.of(new Ad()));
         when(adRepository.findAll(any(Specification.class), any(PageRequest.class))).thenReturn(ads);
         when(adConverter.toResponse(anyList())).thenReturn(List.of(new AdResponse()));
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         SearchResponse response = adService.searchActive(request);
 
@@ -117,6 +125,7 @@ class AdServiceTest {
     void testUpdateStatus_succesfully() {
         Ad ad = Ad.builder().status(AdStatus.PASSIVE).build();
         when(adRepository.findByIdAndUserId(AD_ID,USER_ID)).thenReturn(Optional.of(ad));
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         adService.updateStatus(AdStatus.ACTIVE, AD_ID,USER_ID);
 
@@ -128,6 +137,7 @@ class AdServiceTest {
     @Test
     void testUpdateStatus_returnThrowAdNotFoundException() {
         when(adRepository.findByIdAndUserId(AD_ID,USER_ID)).thenReturn(Optional.empty());
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         assertThrows(AdNotFoundException.class,
                 ()->adService.updateStatus(AdStatus.ACTIVE, AD_ID,USER_ID)) ;
@@ -139,6 +149,7 @@ class AdServiceTest {
     void testFindById_shouldReturnAdResponse() {
         Ad ad = Ad.builder().id(1L).build();
         AdResponse adResponse = AdResponse.builder().id(1L).build();
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         when(adRepository.findById(AD_ID)).thenReturn(Optional.of(ad));
         when(adConverter.toResponse(ad)).thenReturn(adResponse);
@@ -154,6 +165,7 @@ class AdServiceTest {
     void testFindAllByUserId_shouldReturnAdResponseList() {
         Ad ad1 = Ad.builder().id(1L).build();
         Ad ad2 = Ad.builder().id(2L).build();
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         AdResponse adResponse1 = AdResponse.builder().id(1L).build();
         AdResponse adResponse2 = AdResponse.builder().id(2L).build();
@@ -164,7 +176,7 @@ class AdServiceTest {
         when(adRepository.findAllByUserId(USER_ID)).thenReturn(ads);
         when(adConverter.toResponse(ads)).thenReturn(adResponses);
 
-        List<AdResponse> result = adService.findAllByUserId(USER_ID, Optional.empty());
+        List<AdResponse> result = adService.findAllByUserIdByStatus(USER_ID, Optional.empty());
 
         assertNotNull(result);
         assertEquals(2, result.size());
@@ -175,6 +187,7 @@ class AdServiceTest {
     void testUpdateAllStatusByUser_successfully() {
         Ad ad1 = Ad.builder().status(AdStatus.ACTIVE).build();
         Ad ad2 = Ad.builder().status(AdStatus.ACTIVE).build();
+        doNothing().when(logProducer).sendLog(any(LogRequest.class));
 
         List<Ad> ads = List.of(ad1,ad2);
         when(adRepository.findAllByUserId(USER_ID)).thenReturn(ads);
