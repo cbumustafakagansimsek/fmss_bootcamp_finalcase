@@ -1,4 +1,4 @@
-import Card from '@/components/card/card'
+import Card from '@/app/ilan/sayfa/[page]/card'
 import Link from 'next/link';
 import React from 'react'
 import { FaArrowLeft,FaArrowRight  } from "react-icons/fa6";

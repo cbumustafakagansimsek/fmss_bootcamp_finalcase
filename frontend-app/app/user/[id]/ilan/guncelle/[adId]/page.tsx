@@ -68,7 +68,7 @@ export default async function page({params}:{
   return (
 
     <div className=' absolute w-full bg-black flex justify-center items-center h-[100vh] top-0 bg-opacity-40'>
-      <div className='flex flex-col bg-white p-5 rounded-lg gap-1 min-w-80'>
+      <div className='flex flex-col bg-white p-5 rounded-lg gap-1 min-w-80 max-w-[568px]'>
         <Link href={`/user/${params.id}/ilan`} className='flex justify-end'><ImCross className='text-red-600' /></Link>
         <span className='text-lg font-semibold'>İlan Başlığı: <span className='font-normal'>{data.title}</span></span>
         <span className='text-lg font-semibold'>Açıklama: <span className='font-normal'>{data.description}</span></span>

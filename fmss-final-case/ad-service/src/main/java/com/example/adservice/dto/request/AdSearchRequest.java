@@ -1,5 +1,6 @@
 package com.example.adservice.dto.request;
 
+import com.example.adservice.model.AdStatus;
 import lombok.*;
 import org.springframework.data.domain.Sort;
 
@@ -16,6 +17,8 @@ public class AdSearchRequest extends BaseSearchRequest {
     private String district;
 
     private Integer minSize;
+
+    private String houseType;
 
     private Integer maxSize;
 

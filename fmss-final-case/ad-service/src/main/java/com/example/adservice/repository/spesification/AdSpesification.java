@@ -43,6 +43,10 @@ public class AdSpesification {
                 predicateList.add(criteriaBuilder.equal(root.get("numberOfLivingRooms"), request.getNumberOfLivingRooms()));
             }
 
+            if (request.getHouseType() != null && !request.getHouseType().equals("")) {
+                predicateList.add(criteriaBuilder.equal(root.get("houseType"), request.getHouseType()));
+            }
+
             predicateList.add(criteriaBuilder.equal(root.get("status"), AdStatus.ACTIVE));
 
             return criteriaBuilder.and(predicateList.toArray(new Predicate[0]));

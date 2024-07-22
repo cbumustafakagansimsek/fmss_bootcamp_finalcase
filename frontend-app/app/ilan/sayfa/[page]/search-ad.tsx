@@ -1,4 +1,5 @@
 "use client"
+import Link from 'next/link';
 import { useSearchParams, usePathname, useRouter } from 'next/navigation';
 import { FormEvent } from 'react';
 
@@ -20,12 +21,15 @@ export default function SearchAd() {
         params.set("maxSize",formData.get("maxSize") as string)
         params.set("numberOfRooms",formData.get("numberOfRooms") as string)
         params.set("numberOfLivingRooms",formData.get("numberOfLivingRooms") as string)
+        params.set("houseType",formData.get("houseType") as string)
+        
 
 
         replace(`${pathname}?${params.toString()}`)
     }
     return(
         <div className='bg-white p-5 rounded-lg shadow-lg'>
+            <Link href={"/ilan/sayfa/1"} className='text-lg text-red-600 font-semibold float-right'>Hepsini Getir</Link>
             <form onSubmit={handleSearch} >
                 <div className='my-32 flex justify-center flex-wrap gap-8'>
                     <div >
@@ -51,6 +55,16 @@ export default function SearchAd() {
                     <div>
                         <label htmlFor="" className='text-lg'>Salon Sayısı</label>
                         <input type="number" name='numberOfLivingRooms' className='block border-2 rounded-lg p-2' />
+                    </div>
+                    <div >
+                        <label htmlFor="" className='text-lg'>Konut Tipi</label>
+                        <select name="houseType" defaultValue="" id="" className='block border-2 rounded-lg p-2'>
+                            <option value="">Hepsi</option>
+                            <option value="FLAT">Apartman</option>
+                            <option value="VILLA">Villa</option>
+                            <option value="DETACHED_HOUSE">Müstakil Ev</option>
+                        </select>
+
                     </div>
                 </div>
                 
