@@ -2,7 +2,7 @@
 Fmss Full-Stack Bootcamp final project
 
 ## Hakkında
-Emlak uygulamasında kullanıcılar bu sistem üzerinden ilan oluşturabilir, düzenleyebilir, silebilir ve detaylarına ulaşabilirler. Kendi reklamlarını açıp kapatabilirler. Abonelik paketleri satın alarak kendi reklamlarını yayınlamak için kullanabilirler.
+Emlak uygulamasında kullanıcılar bu sistem üzerinden ilan oluşturabilir, düzenleyebilir, silebilir ve detaylarına ulaşabilirler. Kendi ilanlarını aktif ve pasif duruma getirebilir  ve paket satın alıp kendi ilanları için kullanabilir
 - Java 21
 - Next.js
 - Jwt Token Auth
