@@ -6,8 +6,7 @@ import { MdOutlineChair } from "react-icons/md";
 import { IoBedOutline } from "react-icons/io5";
 import { LiaRulerCombinedSolid } from "react-icons/lia";
 import Link from 'next/link';
-import { useCookies } from 'next-client-cookies';
-import { FaCheck } from 'react-icons/fa';
+
 
 export default function Card({data}:any) {
   return (
@@ -20,7 +19,9 @@ export default function Card({data}:any) {
                 alt="image"
             />
             <div className='p-3 flex flex-col'>
-                {data.status =="ACTIVE"?<span className='text-green-600 font-semibold'>Aktif</span>:<span className='text-red-600 font-semibold'>Pasif</span>}
+                {data.status =="ACTIVE"?<span className='text-green-600 font-semibold'>Aktif</span>:""}
+                {data.status =="IN_REVIEW"?<span className='text-blue-600 font-semibold'>Beklemede</span>:""}
+                {data.status =="PASSIVE"?<span className='text-red-600 font-semibold'>Pasif</span>:""}
                 <div className=' border-b'>
                     <h2 className='text-xl font-semibold text-slate-600'>{data.title}</h2>
                     <span className='text-slate-400'><span className=' capitalize'>{data.province}</span>,<span className=' capitalize'>{data.district}</span></span>

@@ -26,7 +26,7 @@ export default async function UserPanel({id}:any) {
             <span className='text-xl font-semibold'>İsim: <span className='font-normal'>{data.name}</span></span>
             <span className='text-xl font-semibold'>Soyisim: <span className='font-normal'>{data.surname}</span></span>
             <span className='text-xl font-semibold'>email: <span className='font-normal'>{data.mail}</span></span>
-            <Link className='bg-white p-3 w-48 font-semibold text-black rounded-lg flex justify-center items-center flex-col border-2 border-black hover:bg-slate-200' href={`/user/${id}/abone-bilgileri`}>Abonelik Paketlerim</Link>
+            <Link className='bg-white p-3 w-48 font-semibold text-black rounded-lg flex justify-center items-center flex-col border-2 border-black hover:bg-slate-200' href={`/user/${id}/abonelik-bilgileri`}>Abonelik Paketlerim</Link>
         </div>
     </div>
     <div className='flex flex-wrap gap-5 justify-center bg-white rounded-lg p-5 shadow-lg'>
