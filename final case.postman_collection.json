@@ -1,0 +1,425 @@
+{
+	"info": {
+		"_postman_id": "77a78847-ddb9-49f1-8d6c-3978e0174a0f",
+		"name": "final case",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17134820"
+	},
+	"item": [
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"mustafa\",\r\n    \"surname\":\"şimşek\",\r\n    \"mail\":\"mustafakagan48@gmail.com\",\r\n    \"password\":\"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save flat",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Güzel apartman\",\r\n    \"description\":\"Apartmanımız gayet güzeldir\",\r\n    \"size\":50,\r\n    \"province\":\"aydın\",\r\n    \"district\":\"efeler\",\r\n    \"amount\":2500000,\r\n    \"numberOfRooms\":3,\r\n    \"numberOfLivingRooms\":1,\r\n    \"numberOfFloors\":20,\r\n    \"floorNumber\":6\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ads/secure/flat",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ads",
+						"secure",
+						"flat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save villa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Güzel villa\",\r\n    \"description\":\"Villamız gayet güzeldir\",\r\n    \"size\":50,\r\n    \"province\":\"muğla\",\r\n    \"district\":\"menteşe\",\r\n    \"amount\":100000,\r\n    \"numberOfRooms\":3,\r\n    \"numberOfLivingRooms\":1,\r\n    \"numberOfFloors\":5,\r\n    \"yardSize\":100,\r\n    \"hasPool\":true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ads/secure/villa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ads",
+						"secure",
+						"villa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save detached house",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\":\"Güzel müstakil ev\",\r\n    \"description\":\"Müstakil gayet güzeldir\",\r\n    \"size\":50,\r\n    \"province\":\"muğla\",\r\n    \"district\":\"menteşe\",\r\n    \"amount\":100000,\r\n    \"numberOfRooms\":3,\r\n    \"numberOfLivingRooms\":1,\r\n    \"numberOfFloors\":5,\r\n    \"yardSize\":100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ads/secure/detached-house",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ads",
+						"secure",
+						"detached-house"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "payment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/payment/validate?productAmount=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"payment",
+						"validate"
+					],
+					"query": [
+						{
+							"key": "productAmount",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get subscriptions for user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/subscriptions/secure/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"subscriptions",
+						"secure",
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"mail\":\"mustafakagan48@gmail.com\",\r\n    \"password\":\"12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ads/search/active?page=0&size=2&sort=ASC&district=&minSize=&maxSize=&numberOfRooms=&numberOfLivingRooms=",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ads",
+						"search",
+						"active"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "2"
+						},
+						{
+							"key": "sort",
+							"value": "ASC"
+						},
+						{
+							"key": "district",
+							"value": ""
+						},
+						{
+							"key": "minSize",
+							"value": ""
+						},
+						{
+							"key": "maxSize",
+							"value": ""
+						},
+						{
+							"key": "numberOfRooms",
+							"value": ""
+						},
+						{
+							"key": "numberOfLivingRooms",
+							"value": ""
+						},
+						{
+							"key": "province",
+							"value": "aydın",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/user/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get ad by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ads/10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ads",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all ad by user id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ads/user/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ads",
+						"user",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change ad status",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/v1/ads/secure/status?status=PASSIVE&id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"v1",
+						"ads",
+						"secure",
+						"status"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "PASSIVE"
+						},
+						{
+							"key": "id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwibmFtZSI6Ik11c3RhZmEgS2HEn2FuICIsIm1haWwiOiJtdXN0YWZha2FnYW40OEBnbWFpbC5jb20iLCJpYXQiOjE3MjE1NjgzNTAsImV4cCI6MTcyMTU3MTk1MH0.e3t6tyh-Nhn0oVqaNbiRgdkh41xp-GRHB2-mWj0ftw8",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

@@ -25,7 +25,8 @@ export default async function page({params}:{params:{id:number}}) {
     <div className='flex justify-center absolute top-0 w-[100vw] h-[100vh] bg-black bg-opacity-30'>
         <div className='my-32 bg-white rounded-lg shadow-lg p-5 overflow-y-auto'>
             <Link href={`/user/${params.id}/ilan`} className='flex justify-end'><ImCross className='text-red-600' /></Link>
-            <table className="border-b border-neutral-200 font-medium">       
+            <h1 className='text-xl font-semibold'>Abonelikler</h1>      
+            <table className="border-b border-neutral-200 font-medium"> 
                 <thead>
                     <tr>
                         <th className='px-6 py-4'></th>

@@ -46,9 +46,9 @@ export default function Login() {
             <h2 className='text-2xl font-semibold border-b mb-5'>GİRİŞ</h2>
             <form onSubmit={handleSubmit} className='flex flex-col gap-3'>
                 <label htmlFor="mail">Email</label>
-                <input className='border border-slate-600 rounded-lg p-2' type="email" id='mail' name='mail'/>
+                <input className='border border-slate-600 rounded-lg p-2' type="email" id='mail' name='mail' required/>
                 <label htmlFor="password">Şifre</label>
-                <input className='border border-slate-600 rounded-lg p-2' type="password" id='password' name='password'/>
+                <input className='border border-slate-600 rounded-lg p-2' type="password" id='password' name='password' required/>
                 <button type='submit' className=' bg-blue-700 text-white rounded-lg p-3'>Giriş</button>
             </form>
             {failure?<span className='text-red-600'>Email veya şifre hatalı</span>:""}
